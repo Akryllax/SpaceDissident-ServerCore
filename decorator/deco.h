@@ -20,17 +20,30 @@
 #include "base_decorator.h"
 #include "base_message.h"
 
+template <class T>
+void addDecorator(const BaseMessage &msg)
+{
+    static_assert(std::is_base_of<BaseDecorator, T>::value, "T must inherit from BaseDecorator");
+}
+
+template <class T>
+void removeDecorator(const BaseMessage &msg)
+{
+    static_assert(std::is_base_of<BaseDecorator, T>::value, "T must inherit from BaseDecorator");
+}
+
 namespace deco
 {
-    template <class T>
-    void addDecorator(const BaseMessage &msg)
+    template <typename T>
+    typename std::vector<T*>::iterator search_deco(std::vector<T*> &decoList)
     {
-        static_assert(std::is_base_of<BaseDecorator, T>::value, "T must inherit from BaseDecorator");
-    }
+        auto item = decoList.begin();
+        for (; item != decoList.end(); item++)
+        {
+            if (dynamic_cast<T *>(*item) != nullptr)
+                break;
+        }
 
-    template <class T>
-    void removeDecorator(const BaseMessage &msg)
-    {
-        static_assert(std::is_base_of<BaseDecorator, T>::value, "T must inherit from BaseDecorator");
+        return item;
     }
-} // namespace deco
+}; // namespace deco

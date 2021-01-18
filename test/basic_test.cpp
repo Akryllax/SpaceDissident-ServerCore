@@ -17,17 +17,33 @@
 
 #include "gtest/gtest.h"
 #include "base_message.h"
+#include "base_decorator.h"
 #include "basic_setup.h"
 
-TEST(BasicMessageTest_CreateObject, BasicMessageCreation){
-    BaseMessage *message = new BaseMessage();
+TEST(BasicMessageTest_CreateObject, BasicMessage_addDecoratorBasic)
+{
+    auto *message = new BaseMessage();
     ASSERT_NE(nullptr, message);
+
+    ASSERT_TRUE(message->addDecorator<BaseDecorator>());
+    ASSERT_EQ(1, message->getDecoratorCount());
+};
+
+TEST(BasicMessageTest_CreateObject, BasicMessage_getDecorator)
+{
+    auto *message = new BaseMessage();
+    ASSERT_NE(nullptr, message);
+
+    ASSERT_TRUE(message->addDecorator<BaseDecorator>());
+    ASSERT_NE(nullptr, message->getDecorator<BaseDecorator>());
 };
 
 int main(int argc, char **argv)
 {
+    basic_setup();
     auto logger = spdlog::get("multi_sink");
     logger->set_level(spdlog::level::trace);
+    spdlog::flush_on(spdlog::level::trace);
 
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

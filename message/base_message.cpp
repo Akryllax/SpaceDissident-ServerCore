@@ -15,38 +15,84 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "base_message.h"
 #include <algorithm>
 #include "spdlog/spdlog.h"
-#include "base_decorator.h"
 #include <concepts>
-#include "deco_id.h"
+#include "base_message.h"
+#include "base_decorator.h"
+#include "message_type_id.h"
+#include "deco.h"
 
-const uint16_t deco::BaseDecorator::DECO_ID = DECO_ID_BASE;
+const uint16_t BaseMessage::MSG_TYPE_ID = MSG_TYPE_ID_BASE;
 
-BaseMessage::BaseMessage(){
+BaseMessage::BaseMessage()
+{
     spdlog::trace("Creating new BaseMessage");
 };
 
 BaseMessage::~BaseMessage()
 {
-    std::for_each(this->_decoList.begin(), this->_decoList.end(), [this](deco::BaseDecorator const &deco) {
-        // this->removeDecorator(deco);
-    });
+    // std::for_each(this->_decoList.begin(), this->_decoList.end(), [this](BaseDecorator const &deco) {
+    //     // this->removeDecorator(deco);
+    // });
 }
 
 template <>
-bool BaseMessage::removeDecorator<deco::BaseDecorator>()
+bool BaseMessage::removeDecorator<BaseDecorator>()
 {
     spdlog::trace("BaseMessage::removeDecorator");
-    auto item = std::find_if(this->_decoList.begin(), this->_decoList.end(), [](auto it) {
-        return std::is_base_of<decltype(it), deco::BaseDecorator>();
-    });
+    // auto item = std::find_if(this->_decoList.begin(), this->_decoList.end(), [](auto *it) {
+    //     return std::is_base_of<decltype(it), BaseDecorator>();
+    // });
 
+    auto item = deco::search_deco<BaseDecorator>(this->_decoList);
     bool result = false;
     if (item != this->_decoList.end())
     {
+        //TODO This is aweful
+        this->_decoList.erase(item);
+        result = true;
     }
 
     return result;
 };
+
+template <>
+bool BaseMessage::addDecorator<BaseDecorator>()
+{
+    spdlog::trace("BaseMessage::addDecorator");
+    // auto item = std::find_if(this->_decoList.begin(), this->_decoList.end(), [&](auto *it) {
+    //     spdlog::trace("Searching for BaseDecorator: {}", it->to_string());
+    //     return (static_cast<BaseDecorator*>(*it) != nullptr);
+    // });
+
+
+    auto item = deco::search_deco<BaseDecorator>(this->_decoList);
+    bool result = false;
+
+    spdlog::trace("BaseMessage::addDecorator isDecoratorPresent: {}", item != this->_decoList.end());
+
+    if (item == this->_decoList.end())
+    {
+        spdlog::trace("BaseMessage::addDecorator adding new Decorator");
+        auto deco = new BaseDecorator();
+        this->_decoList.push_back(deco);
+        result = true;
+    }
+
+    return result;
+};
+
+template <>
+BaseDecorator *BaseMessage::getDecorator<BaseDecorator>()
+{
+    spdlog::trace("BaseMessage::getDecorator");
+    spdlog::trace("BaseMessage->_decoList size: {}", this->_decoList.size());
+
+    return *(deco::search_deco<BaseDecorator>(this->_decoList));
+};
+
+int BaseMessage::getDecoratorCount()
+{
+    return this->_decoList.size();
+}

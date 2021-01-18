@@ -7,7 +7,20 @@ set(CMAKE_CXX_STANDARD 17)
 project ("GameServerCore0")
 
 # Add source to this project's executable.
-set(SOURCES "core/server_core.h" "core/server_core.cpp" "util/core_timer.h" "core/game_session.h" "core/game_session.cpp" "util/config_reader.h" "util/config_reader.cpp" "message/base_message.h" "message/base_message.cpp")
+set(SOURCES
+  "core/server_core.h"
+  "core/server_core.cpp"
+  "util/core_timer.h"
+  "core/game_session.h"
+  "core/game_session.cpp"
+  "util/config_reader.h"
+  "util/config_reader.cpp"
+  "decorator/base_decorator.h"
+  "decorator/base_decorator.cpp"
+  "message/base_message.h"
+  "message/base_message.cpp"
+  "message/message_type_id.h"
+  )
 
 add_executable (GameServerCore0 "GameServerCore0.cpp" "GameServerCore0.h" ${SOURCES})
 

@@ -18,12 +18,8 @@
 #pragma once
 #include "base_decorator.h"
 
-namespace deco
+class DebugDecorator : BaseDecorator
 {
-    class DebugDecorator : BaseDecorator
-    {
-    protected:
-        DebugDecorator(){};
-    }
-
-} // namespace deco
+protected:
+    DebugDecorator(){};
+};

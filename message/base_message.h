@@ -17,6 +17,7 @@
 
 #pragma once
 #include <vector>
+#include <memory>
 #include "base_decorator.h"
 
 class BaseMessage
@@ -26,18 +27,20 @@ public:
     ~BaseMessage();
 
 protected:
-    std::vector<deco::BaseDecorator> _decoList;
+    std::vector<BaseDecorator*> _decoList;
 
 public:
     static const uint16_t MSG_TYPE_ID;
 
 public:
     template <typename T>
-    const T &getDecorator();
+    T *getDecorator();
 
     template <typename T>
-    void addDecorator();
+    bool addDecorator();
 
     template <typename T>
     bool removeDecorator();
+
+    int getDecoratorCount();
 };

@@ -17,16 +17,14 @@
 
 #pragma once
 #include <cinttypes>
+#include <string>
 
-namespace deco
+class BaseDecorator
 {
-    class BaseDecorator
-    {
-    protected:
-        BaseDecorator();
+public:
+    BaseDecorator();
+    static const uint16_t DECO_ID;
 
     public:
-        static const uint16_t DECO_ID;
-    };
-
-} // namespace deco
+    std::string to_string();
+};

@@ -17,5 +17,16 @@
 
 #include "base_decorator.h"
 #include "deco_id.h"
+#include "spdlog/spdlog.h"
 
-const uint16_t deco::BaseDecorator::DECO_ID = DECO_ID_BASE;
+const uint16_t BaseDecorator::DECO_ID = DECO_ID_BASE;
+
+BaseDecorator::BaseDecorator()
+{
+    spdlog::trace("Creating new BaseDecorator");
+};
+
+std::string BaseDecorator::to_string()
+{
+    return "BaseDecorator";
+};
