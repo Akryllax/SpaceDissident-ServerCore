@@ -15,14 +15,3 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-#include "../util/config_reader.h"
-class ServerCore
-{
-public:
-	ServerCore();
-	~ServerCore();
-
-	void tick();
-	void initialize();
-};
