@@ -19,12 +19,16 @@
 #include "base_message.h"
 #include "basic_setup.h"
 
-TEST(BasicMessageTest_CreateObject, PositiveNos){
-    BaseMessage message;
+TEST(BasicMessageTest_CreateObject, BasicMessageCreation){
+    BaseMessage *message = new BaseMessage();
+    ASSERT_NE(nullptr, message);
 };
 
 int main(int argc, char **argv)
 {
+    auto logger = spdlog::get("multi_sink");
+    logger->set_level(spdlog::level::trace);
+
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

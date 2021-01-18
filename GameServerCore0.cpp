@@ -56,7 +56,7 @@ int main()
         {
             fpsTimer = steady_clock::now();
 
-            spdlog::info("CPS: {}", FPS.count() * 60);
+            spdlog::trace("CPS: {}", FPS.count() * 60);
             serverCore.tick();
         }
     }

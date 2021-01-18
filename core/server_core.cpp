@@ -22,19 +22,19 @@
 
 ServerCore::ServerCore()
 {
-    spdlog::info("ServerCore constructor");
+    spdlog::trace("ServerCore constructor");
 };
 
 ServerCore::~ServerCore()
 {
-    spdlog::info("ServerCore deconstructor");
+    spdlog::trace("ServerCore deconstructor");
 };
 
 void ServerCore::tick(){
-    // spdlog::info("ServerCore tick");
+    // spdlog::trace("ServerCore tick");
 };
 
 void ServerCore::initialize()
 {
-    spdlog::info("ServerCore initialize");
+    spdlog::trace("ServerCore initialize");
 }
