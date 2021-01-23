@@ -18,13 +18,21 @@
 #pragma once
 #include <cinttypes>
 #include <string>
+#include "deco.h"
 
 class BaseDecorator
 {
 public:
     BaseDecorator();
+    virtual ~BaseDecorator(){};
     static const uint16_t DECO_ID;
 
-    public:
-    std::string to_string();
+public:
+    virtual std::string to_string()
+    {
+        return "BaseDecorator";
+    }
+
+public:
+    virtual void initialize();
 };

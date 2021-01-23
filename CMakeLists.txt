@@ -17,6 +17,8 @@ set(SOURCES
   "util/config_reader.cpp"
   "decorator/base_decorator.h"
   "decorator/base_decorator.cpp"
+  "decorator/debug_decorator.h"
+  "decorator/debug_decorator.cpp"
   "message/base_message.h"
   "message/base_message.cpp"
   "message/message_type_id.h"

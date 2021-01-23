@@ -20,24 +20,51 @@
 #include <memory>
 #include "base_decorator.h"
 
+class BaseDecorator;
+
 class BaseMessage
 {
+
 public:
     BaseMessage();
     ~BaseMessage();
 
 protected:
-    std::vector<BaseDecorator*> _decoList;
+    std::vector<BaseDecorator *> _decoList;
 
 public:
     static const uint16_t MSG_TYPE_ID;
 
 public:
     template <typename T>
-    T *getDecorator();
+    BaseDecorator *getDecorator()
+    {
+        spdlog::trace("BaseMessage::getDecorator");
+        spdlog::trace("BaseMessage->_decoList size: {}", this->_decoList.size());
+
+        return deco::search_deco<T>(this->_decoList);
+    }
 
     template <typename T>
-    bool addDecorator();
+    bool addDecorator()
+    {
+        spdlog::trace("BaseMessage::addDecorator");
+
+        auto item = deco::search_deco<T>(this->_decoList);
+        bool result = false;
+
+        spdlog::trace("BaseMessage::addDecorator isDecoratorPresent: {}", item != nullptr);
+
+        if (!item)
+        {
+            spdlog::trace("BaseMessage::addDecorator adding new Decorator");
+            auto deco = new T();
+            this->_decoList.push_back(deco);
+            result = true;
+        }
+
+        return result;
+    }
 
     template <typename T>
     bool removeDecorator();

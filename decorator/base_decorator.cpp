@@ -23,10 +23,11 @@ const uint16_t BaseDecorator::DECO_ID = DECO_ID_BASE;
 
 BaseDecorator::BaseDecorator()
 {
-    spdlog::trace("Creating new BaseDecorator");
+    this->initialize();
 };
 
-std::string BaseDecorator::to_string()
+
+void BaseDecorator::initialize()
 {
-    return "BaseDecorator";
-};
+    spdlog::trace("Creating new BaseDecorator");
+}
