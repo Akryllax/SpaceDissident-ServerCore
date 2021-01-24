@@ -3,3 +3,6 @@
     A modern logging utlitiy.
 
     It includes the fmt library for formatting strings in a less painful way :)
+
+[Using] Vec3/4, Matrix 3/4 from https://github.com/DanielChappuis/opengl-framework
+    Attribute to Daniel Chappuis on release
