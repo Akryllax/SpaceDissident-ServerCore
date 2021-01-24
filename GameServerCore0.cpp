@@ -38,12 +38,8 @@ int main()
 
     spdlog::info("Main initialization...");
     ServerCore serverCore;
-
-
-    BaseMessage msg;
-
-
     serverCore.initialize();
+
     time_point<steady_clock> fpsTimer(steady_clock::now());
     frame FPS{};
 

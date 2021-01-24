@@ -22,6 +22,7 @@
 
 class BaseMessage;
 class BaseDecorator;
+
 namespace deco
 {
 

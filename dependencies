@@ -1,2 +1,5 @@
 [Using] SPDLog logger:
     https://github.com/gabime/spdlog
+    A modern logging utlitiy.
+
+    It includes the fmt library for formatting strings in a less painful way :)

@@ -22,6 +22,15 @@ set(SOURCES
   "message/base_message.h"
   "message/base_message.cpp"
   "message/message_type_id.h"
+  "world/common/data_holder.h"
+  "world/math/Color.h"
+  "world/math/Matrix3.h"
+  "world/math/Matrix4.h"
+  "world/math/Vector2.h"
+  "world/math/Vector3.h"
+  "world/math/Vector4.h"
+  "world/math/transform.h"
+  "world/common/gameobject.h"
   )
 
 add_executable (GameServerCore0 "GameServerCore0.cpp" "GameServerCore0.h" ${SOURCES})
@@ -30,6 +39,7 @@ target_include_directories(GameServerCore0 PRIVATE "include")
 target_include_directories(GameServerCore0 PRIVATE "message")
 target_include_directories(GameServerCore0 PRIVATE "core")
 target_include_directories(GameServerCore0 PRIVATE "decorator")
+target_include_directories(GameServerCore0 PRIVATE "world")
 
 # TODO: Add tests and install targets if needed.
 
@@ -72,5 +82,29 @@ target_include_directories(core_gtest PRIVATE "include")
 target_include_directories(core_gtest PRIVATE "core")
 target_include_directories(core_gtest PRIVATE "message")
 target_include_directories(core_gtest PRIVATE "decorator")
+target_include_directories(core_gtest PRIVATE "world")
 target_link_libraries(core_gtest gtest_main)
 add_test(NAME core_gtest_test COMMAND core_gtest)
+
+# Now simply link against gtest or gtest_main as needed. Eg
+add_executable(world_gtest test/world_test.cpp ${SOURCES})
+
+target_include_directories(world_gtest PRIVATE "include")
+target_include_directories(world_gtest PRIVATE "core")
+target_include_directories(world_gtest PRIVATE "message")
+target_include_directories(world_gtest PRIVATE "decorator")
+target_include_directories(world_gtest PRIVATE "world")
+target_link_libraries(world_gtest gtest_main)
+add_test(NAME world_gtest_test COMMAND world_gtest)
+
+
+# Now simply link against gtest or gtest_main as needed. Eg
+add_executable(gameobject_test test/gameobject_test.cpp ${SOURCES})
+
+target_include_directories(gameobject_test PRIVATE "include")
+target_include_directories(gameobject_test PRIVATE "core")
+target_include_directories(gameobject_test PRIVATE "message")
+target_include_directories(gameobject_test PRIVATE "decorator")
+target_include_directories(gameobject_test PRIVATE "world")
+target_link_libraries(gameobject_test gtest_main)
+add_test(NAME gameobject_test_test COMMAND gameobject_test)

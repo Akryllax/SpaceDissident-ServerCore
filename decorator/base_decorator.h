@@ -19,6 +19,7 @@
 #include <cinttypes>
 #include <string>
 #include "deco.h"
+#include "base_message.h"
 
 class BaseDecorator
 {
@@ -35,4 +36,7 @@ public:
 
 public:
     virtual void initialize();
+
+public:
+    virtual void visit(const BaseMessage& msg);
 };

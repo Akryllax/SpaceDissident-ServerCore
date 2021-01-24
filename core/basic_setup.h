@@ -34,3 +34,18 @@ void basic_setup()
     logger->set_pattern("[core] [%^%l%$] %v");
     logger->set_level(spdlog::level::trace);
 };
+
+void basic_setup(std::string filename)
+{
+    spdlog::trace("Running basic_setup(filename)");
+    auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
+
+    auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(fmt::format("logs/{}", filename), true);
+    // auto file_sink = spdlog::create_async<spdlog::sinks::basic_file_sink_mt>("async_file_logger", "core.log");
+
+    // or you can even set multi_sink logger as default logger
+    spdlog::set_default_logger(std::make_shared<spdlog::logger>("multi_sink", spdlog::sinks_init_list({console_sink, file_sink})));
+    auto logger = spdlog::get("multi_sink");
+    logger->set_pattern("[core] [%^%l%$] %v");
+    logger->set_level(spdlog::level::trace);
+}

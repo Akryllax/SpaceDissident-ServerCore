@@ -31,3 +31,13 @@ void BaseDecorator::initialize()
 {
     spdlog::trace("Creating new BaseDecorator");
 }
+
+/**
+ * BaseDecorator
+ *  Use to implement actions into visitors. Only *real* way to implement functionality into the network stack.
+ * @param  {BaseMessage} msg : Const reference to owning message object.
+ */
+void BaseDecorator::visit(const BaseMessage& msg)
+{
+    //Base decorator does nothing
+}
