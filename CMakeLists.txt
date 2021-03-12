@@ -33,15 +33,38 @@ set(SOURCES
   "world/common/gameobject.h"
   )
 
-add_executable (GameServerCore0 "GameServerCore0.cpp" "GameServerCore0.h" ${SOURCES})
+# Add lib/test subdirectory into CMake context
+add_subdirectory("lib/test" TestLibrary)
+add_subdirectory("lib/networklib" NetworkLibrary)
+include_directories("${PROJECT_SOURCE_DIR}/lib/test")
+include_directories("${PROJECT_SOURCE_DIR}/lib/networklib")
 
-target_include_directories(GameServerCore0 PRIVATE "include")
-target_include_directories(GameServerCore0 PRIVATE "message")
-target_include_directories(GameServerCore0 PRIVATE "core")
-target_include_directories(GameServerCore0 PRIVATE "decorator")
-target_include_directories(GameServerCore0 PRIVATE "world")
+################################################################################
+#                          MAIN BINARY                                         #
+################################################################################
+add_executable (GameServerCore0
+  "GameServerCore0.cpp"
+  "GameServerCore0.h"
+  ${SOURCES}
+)
+target_include_directories(GameServerCore0 PUBLIC "include")
+target_include_directories(GameServerCore0 PUBLIC "message")
+target_include_directories(GameServerCore0 PUBLIC "core")
+target_include_directories(GameServerCore0 PUBLIC "decorator")
+target_include_directories(GameServerCore0 PUBLIC "world")
+
+# Link TestLibrary
+message("-- Linking TestLibrary")
+target_link_libraries(GameServerCore0 PRIVATE TestLibrary)
+# Link TestLibrary
+message("-- Linking NetworkLibrary")
+target_link_libraries(GameServerCore0 PRIVATE NetworkLibrary)
 
 # TODO: Add tests and install targets if needed.
+
+################################################################################
+#            GTEST                                                             #
+################################################################################
 
 # Download and unpack googletest at configure time
 configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
@@ -75,6 +98,10 @@ if (CMAKE_VERSION VERSION_LESS 2.8.11)
   include_directories("${gtest_SOURCE_DIR}/include")
 endif()
 
+################################################################################
+#                   DEFINE GTEST BINARIES                                      #
+################################################################################
+
 # Now simply link against gtest or gtest_main as needed. Eg
 add_executable(core_gtest test/basic_test.cpp ${SOURCES})
 
@@ -84,6 +111,9 @@ target_include_directories(core_gtest PRIVATE "message")
 target_include_directories(core_gtest PRIVATE "decorator")
 target_include_directories(core_gtest PRIVATE "world")
 target_link_libraries(core_gtest gtest_main)
+# Link TestLibrary
+message("-- Linking TestLibrary")
+target_link_libraries(core_gtest TestLibrary)
 add_test(NAME core_gtest_test COMMAND core_gtest)
 
 # Now simply link against gtest or gtest_main as needed. Eg
@@ -95,6 +125,9 @@ target_include_directories(world_gtest PRIVATE "message")
 target_include_directories(world_gtest PRIVATE "decorator")
 target_include_directories(world_gtest PRIVATE "world")
 target_link_libraries(world_gtest gtest_main)
+# Link TestLibrary
+message("-- Linking TestLibrary")
+target_link_libraries(world_gtest TestLibrary)
 add_test(NAME world_gtest_test COMMAND world_gtest)
 
 
@@ -107,4 +140,45 @@ target_include_directories(gameobject_test PRIVATE "message")
 target_include_directories(gameobject_test PRIVATE "decorator")
 target_include_directories(gameobject_test PRIVATE "world")
 target_link_libraries(gameobject_test gtest_main)
+# Link TestLibrary
+message("-- Linking TestLibrary")
+target_link_libraries(gameobject_test TestLibrary)
 add_test(NAME gameobject_test_test COMMAND gameobject_test)
+
+
+# Now simply link against gtest or gtest_main as needed. Eg
+add_executable(networklib_test test/networklib_test.cpp ${SOURCES})
+
+target_include_directories(networklib_test PRIVATE "include")
+target_include_directories(networklib_test PRIVATE "core")
+target_include_directories(networklib_test PRIVATE "message")
+target_include_directories(networklib_test PRIVATE "decorator")
+target_include_directories(networklib_test PRIVATE "world")
+target_link_libraries(networklib_test gtest_main)
+# Link TestLibrary
+message("-- Linking NetworkLibrary")
+target_link_libraries(networklib_test NetworkLibrary)
+add_test(NAME networklib_test_test COMMAND networklib_test)
+
+################################################################################
+#           PROTOBUF                                                           #
+################################################################################
+
+# # Add googletest directly to our build. This defines
+# # the gtest and gtest_main targets.
+# add_subdirectory(${PROJECT_SOURCE_DIR}/tools/protobuf-3.15.5/cmake
+#                  EXCLUDE_FROM_ALL)
+
+
+################################################################################
+#                      Copy DLLs after build                                   #
+################################################################################
+add_custom_command(TARGET GameServerCore0 POST_BUILD        # Adds a post-build event to GameServerCore0
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different  # which executes "cmake - E copy_if_different..."
+        "${PROJECT_SOURCE_DIR}/build/lib/networklib/NetworkLibrary.dll"      # <--this is in-file
+        $<TARGET_FILE_DIR:GameServerCore0>)                 # <--this is out-file path
+
+add_custom_command(TARGET GameServerCore0 POST_BUILD        # Adds a post-build event to GameServerCore0
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different  # which executes "cmake - E copy_if_different..."
+        "${PROJECT_SOURCE_DIR}/build/lib/test/TestLibrary.dll"      # <--this is in-file
+        $<TARGET_FILE_DIR:GameServerCore0>)                 # <--this is out-file path

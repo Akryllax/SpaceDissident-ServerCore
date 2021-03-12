@@ -24,6 +24,7 @@
 #include "math/Matrix3.h"
 #include "math/Matrix4.h"
 #include "math/transform.h"
+#include "test_library.h"
 
 TEST(BasicVectorTest, VectorAdd)
 {
@@ -31,11 +32,14 @@ TEST(BasicVectorTest, VectorAdd)
     World::Vector3 vecB = {3, 2, 1};
 
     ASSERT_EQ(World::Vector3(3, 3, 3), vecA + vecB);
+
+    auto t = new TestLibrary();
+    TestLibrary::helloStatic();
 };
 
 int main(int argc, char **argv)
 {
-    basic_setup();
+    basic_setup("world_gen_test.log");
     auto logger = spdlog::get("multi_sink");
     logger->set_level(spdlog::level::trace);
     spdlog::flush_on(spdlog::level::trace);

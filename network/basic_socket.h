@@ -15,3 +15,23 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include <sys/types.h>
+
+namespace Networking
+{
+    class basic_socket
+    {
+    public:
+        basic_socket(int domain, int type, int protocol);
+        ~basic_socket();
+    };
+
+    class TCPSocket : public basic_socket
+    {
+    public:
+    };
+
+    class UDPSocket : public basic_socket
+    {
+    };
+} // namespace Networking
