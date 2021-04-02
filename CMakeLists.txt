@@ -173,12 +173,11 @@ add_test(NAME networklib_test_test COMMAND networklib_test)
 ################################################################################
 #                      Copy DLLs after build                                   #
 ################################################################################
-add_custom_command(TARGET GameServerCore0 POST_BUILD        # Adds a post-build event to GameServerCore0
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different  # which executes "cmake - E copy_if_different..."
-        "${PROJECT_SOURCE_DIR}/build/lib/networklib/NetworkLibrary.dll"      # <--this is in-file
-        $<TARGET_FILE_DIR:GameServerCore0>)                 # <--this is out-file path
-
-add_custom_command(TARGET GameServerCore0 POST_BUILD        # Adds a post-build event to GameServerCore0
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different  # which executes "cmake - E copy_if_different..."
-        "${PROJECT_SOURCE_DIR}/build/lib/test/TestLibrary.dll"      # <--this is in-file
-        $<TARGET_FILE_DIR:GameServerCore0>)                 # <--this is out-file path
+add_custom_command(TARGET GameServerCore0 POST_BUILD                   # Adds a post-build event to GameServerCore0
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different                      # which executes "cmake - E copy_if_different..."
+        "${PROJECT_SOURCE_DIR}/build/lib/networklib/NetworkLibrary.dll"# <--this is in-file
+        $<TARGET_FILE_DIR:GameServerCore0>)                            # <--this is out-file pat
+add_custom_command(TARGET GameServerCore0 POST_BUILD                   # Adds a post-build event to GameServerCore0
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different                      # which executes "cmake - E copy_if_different..."
+        "${PROJECT_SOURCE_DIR}/build/lib/test/TestLibrary.dll"         # <--this is in-file
+        $<TARGET_FILE_DIR:GameServerCore0>)                            # <--this is out-file path
