@@ -15,6 +15,7 @@ set(SOURCES
   "core/game_session.cpp"
   "util/config_reader.h"
   "util/config_reader.cpp"
+  "decorator/deco.h"
   "decorator/base_decorator.h"
   "decorator/base_decorator.cpp"
   "decorator/debug_decorator.h"

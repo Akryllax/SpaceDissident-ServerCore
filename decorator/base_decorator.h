@@ -21,6 +21,8 @@
 #include "deco.h"
 #include "base_message.h"
 
+class BaseMessage;
+
 class BaseDecorator
 {
 public:

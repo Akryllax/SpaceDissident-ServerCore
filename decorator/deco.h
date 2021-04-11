@@ -23,24 +23,26 @@
 class BaseMessage;
 class BaseDecorator;
 
-namespace deco
+class DecoratorUtils
 {
-
+public:
     template <class T>
-    void addDecorator(const BaseMessage &msg)
+    static void addDecorator(const BaseMessage &msg)
     {
         static_assert(std::is_base_of<BaseDecorator, T>::value, "T must inherit from BaseDecorator");
     }
 
+public:
     template <class T>
-    void removeDecorator(const BaseMessage &msg)
+    static void removeDecorator(const BaseMessage &msg)
     {
         static_assert(std::is_base_of<BaseDecorator, T>::value, "T must inherit from BaseDecorator");
     }
 
     //TODO This is aweful, please refactor
+public:
     template <class T>
-    T* search_deco(std::vector<BaseDecorator*> &decoList)
+    static T *search_deco(std::vector<BaseDecorator *> &decoList)
     {
         auto item = decoList.begin();
         for (; item != decoList.end(); item++)
@@ -49,6 +51,6 @@ namespace deco
                 break;
         }
 
-        return (item != decoList.end()) ? (T*) (*item) : nullptr;
+        return (item != decoList.end()) ? (T *)(*item) : nullptr;
     }
 }; // namespace deco

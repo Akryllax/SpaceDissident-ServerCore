@@ -18,7 +18,9 @@
 #pragma once
 #include <vector>
 // #include <memory>
+#include "deco.h"
 #include "base_decorator.h"
+#include "spdlog/spdlog.h"
 
 class BaseDecorator;
 
