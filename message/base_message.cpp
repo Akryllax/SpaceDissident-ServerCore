@@ -32,27 +32,10 @@ BaseMessage::BaseMessage()
 
 BaseMessage::~BaseMessage()
 {
-
 }
-
-template <>
-bool BaseMessage::removeDecorator<BaseDecorator>()
-{
-    spdlog::trace("BaseMessage::removeDecorator");
-
-    auto item = deco::search_deco<BaseDecorator>(this->_decoList);
-    bool result = false;
-    if (item)
-    {
-        //TODO This is aweful
-        // this->_decoList.erase(item);
-        result = true;
-    }
-
-    return result;
-};
 
 int BaseMessage::getDecoratorCount()
 {
     return this->_decoList.size();
 }
+

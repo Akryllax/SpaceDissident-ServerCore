@@ -1,3 +1,5 @@
+#ifndef DECO_H_
+#define DECO_H_
 /*
  *   Copyright (c) 2021 Akryllax (akryllax@gmail.com)
 
@@ -15,33 +17,29 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
 #include <type_traits>
-#include "base_decorator.h"
-#include "base_message.h"
+#include <vector>
+// #include "base_decorator.h"
+// #include "base_message.h"
 
 class BaseMessage;
 class BaseDecorator;
 
-class DecoratorUtils
+namespace DecoratorUtils
 {
-public:
     template <class T>
     static void addDecorator(const BaseMessage &msg)
     {
         static_assert(std::is_base_of<BaseDecorator, T>::value, "T must inherit from BaseDecorator");
-    }
+    };
 
-public:
     template <class T>
     static void removeDecorator(const BaseMessage &msg)
     {
         static_assert(std::is_base_of<BaseDecorator, T>::value, "T must inherit from BaseDecorator");
-    }
+    };
 
-    //TODO This is aweful, please refactor
-public:
-    template <class T>
+    template <class T> //TODO This is aweful, please refactor
     static T *search_deco(std::vector<BaseDecorator *> &decoList)
     {
         auto item = decoList.begin();
@@ -52,5 +50,6 @@ public:
         }
 
         return (item != decoList.end()) ? (T *)(*item) : nullptr;
-    }
+    };
 }; // namespace deco
+#endif

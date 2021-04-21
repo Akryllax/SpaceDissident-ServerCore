@@ -1,3 +1,4 @@
+#pragma once
 /*
  *   Copyright (c) 2021 Akryllax (akryllax@gmail.com)
 
@@ -15,7 +16,6 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
 #include <vector>
 // #include <memory>
 #include "deco.h"
@@ -44,7 +44,7 @@ public:
         spdlog::trace("BaseMessage::getDecorator");
         spdlog::trace("BaseMessage->_decoList size: {}", this->_decoList.size());
 
-        return deco::search_deco<T>(this->_decoList);
+        return DecoratorUtils::search_deco<T>(this->_decoList);
     }
 
     template <typename T>
@@ -52,7 +52,7 @@ public:
     {
         spdlog::trace("BaseMessage::addDecorator");
 
-        auto item = deco::search_deco<T>(this->_decoList);
+        auto item = DecoratorUtils::search_deco<T>(this->_decoList);
         bool result = false;
 
         spdlog::trace("BaseMessage::addDecorator isDecoratorPresent: {}", item != nullptr);
@@ -69,7 +69,21 @@ public:
     }
 
     template <typename T>
-    bool removeDecorator();
+    bool removeDecorator()
+    {
+        spdlog::trace("BaseMessage::removeDecorator");
+
+        auto item = DecoratorUtils::search_deco<T>(this->_decoList);
+        bool result = false;
+        if (item)
+        {
+            //TODO This is aweful
+            // this->_decoList.erase(item);
+            result = true;
+        }
+
+        return result;
+    };
 
     int getDecoratorCount();
 };
