@@ -17,10 +17,11 @@
 
 #include <algorithm>
 #include "spdlog/spdlog.h"
-#include <concepts>
+// #include <concepts>
 #include "base_message.h"
 #include "base_decorator.h"
 #include "message_type_id.h"
+#include "deco.h"
 
 const uint16_t BaseMessage::MSG_TYPE_ID = MSG_TYPE_ID_BASE;
 
@@ -31,27 +32,10 @@ BaseMessage::BaseMessage()
 
 BaseMessage::~BaseMessage()
 {
-
 }
-
-template <>
-bool BaseMessage::removeDecorator<BaseDecorator>()
-{
-    spdlog::trace("BaseMessage::removeDecorator");
-
-    auto item = deco::search_deco<BaseDecorator>(this->_decoList);
-    bool result = false;
-    if (item)
-    {
-        //TODO This is aweful
-        // this->_decoList.erase(item);
-        result = true;
-    }
-
-    return result;
-};
 
 int BaseMessage::getDecoratorCount()
 {
     return this->_decoList.size();
 }
+

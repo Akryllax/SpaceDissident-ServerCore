@@ -16,6 +16,7 @@
  */
 
 #include "gtest/gtest.h"
+#include "deco.h"
 #include "base_message.h"
 #include "base_decorator.h"
 #include "debug_decorator.h"
@@ -65,8 +66,8 @@ TEST(DecoTest, searchDecoBasic_1)
 
     std::vector<BaseDecorator*> baseDecoList = {baseDeco, debugDeco};
 
-    auto deco_basic = deco::search_deco<BaseDecorator>(baseDecoList);
-    auto deco_debug = deco::search_deco<DebugDecorator>(baseDecoList);
+    auto deco_basic = DecoratorUtils::search_deco<BaseDecorator>(baseDecoList);
+    auto deco_debug = DecoratorUtils::search_deco<DebugDecorator>(baseDecoList);
 
     ASSERT_NE(nullptr, deco_basic);
     ASSERT_NE(nullptr, deco_debug);

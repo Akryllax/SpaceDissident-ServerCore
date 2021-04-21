@@ -8,30 +8,16 @@ project ("GameServerCore0")
 
 # Add source to this project's executable.
 set(SOURCES
-  "core/server_core.h"
   "core/server_core.cpp"
-  "util/core_timer.h"
-  "core/game_session.h"
   "core/game_session.cpp"
-  "util/config_reader.h"
   "util/config_reader.cpp"
-  "decorator/base_decorator.h"
   "decorator/base_decorator.cpp"
-  "decorator/debug_decorator.h"
   "decorator/debug_decorator.cpp"
-  "message/base_message.h"
   "message/base_message.cpp"
-  "message/message_type_id.h"
-  "world/common/data_holder.h"
-  "world/math/Color.h"
-  "world/math/Matrix3.h"
-  "world/math/Matrix4.h"
-  "world/math/Vector2.h"
-  "world/math/Vector3.h"
-  "world/math/Vector4.h"
-  "world/math/transform.h"
-  "world/common/gameobject.h"
-  )
+)
+
+SET(CMAKE_CXX_NO_PRAGMA_FLAGS "-Wno-pragma-once-outside-header")
+
 
 # Add lib/test subdirectory into CMake context
 add_subdirectory("lib/test" TestLibrary)
@@ -44,7 +30,6 @@ include_directories("${PROJECT_SOURCE_DIR}/lib/networklib")
 ################################################################################
 add_executable (GameServerCore0
   "GameServerCore0.cpp"
-  "GameServerCore0.h"
   ${SOURCES}
 )
 target_include_directories(GameServerCore0 PUBLIC "include")
@@ -106,8 +91,8 @@ endif()
 add_executable(core_gtest test/basic_test.cpp ${SOURCES})
 
 target_include_directories(core_gtest PRIVATE "include")
-target_include_directories(core_gtest PRIVATE "core")
 target_include_directories(core_gtest PRIVATE "message")
+target_include_directories(core_gtest PRIVATE "core")
 target_include_directories(core_gtest PRIVATE "decorator")
 target_include_directories(core_gtest PRIVATE "world")
 target_link_libraries(core_gtest gtest_main)
@@ -160,9 +145,9 @@ message("-- Linking NetworkLibrary")
 target_link_libraries(networklib_test NetworkLibrary)
 add_test(NAME networklib_test_test COMMAND networklib_test)
 
-################################################################################
-#           PROTOBUF                                                           #
-################################################################################
+# ################################################################################
+# #           PROTOBUF                                                           #
+# ################################################################################
 
 # # Add googletest directly to our build. This defines
 # # the gtest and gtest_main targets.
@@ -171,13 +156,25 @@ add_test(NAME networklib_test_test COMMAND networklib_test)
 
 
 ################################################################################
-#                      Copy DLLs after build                                   #
+#                      Copy dynamic libs after build                           #
 ################################################################################
-add_custom_command(TARGET GameServerCore0 POST_BUILD                   # Adds a post-build event to GameServerCore0
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different                      # which executes "cmake - E copy_if_different..."
-        "${PROJECT_SOURCE_DIR}/build/lib/networklib/NetworkLibrary.dll"# <--this is in-file
-        $<TARGET_FILE_DIR:GameServerCore0>)                            # <--this is out-file pat
-add_custom_command(TARGET GameServerCore0 POST_BUILD                   # Adds a post-build event to GameServerCore0
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different                      # which executes "cmake - E copy_if_different..."
-        "${PROJECT_SOURCE_DIR}/build/lib/test/TestLibrary.dll"         # <--this is in-file
-        $<TARGET_FILE_DIR:GameServerCore0>)                            # <--this is out-file path
+
+if (WIN32)
+  add_custom_command(TARGET GameServerCore0 POST_BUILD                   # Adds a post-build event to GameServerCore0
+      COMMAND ${CMAKE_COMMAND} -E copy_if_different                      # which executes "cmake - E copy_if_different..."
+          "${PROJECT_SOURCE_DIR}/build/lib/networklib/NetworkLibrary.dll"# <--this is in-file
+          $<TARGET_FILE_DIR:GameServerCore0>)                            # <--this is out-file pat
+  add_custom_command(TARGET GameServerCore0 POST_BUILD                   # Adds a post-build event to GameServerCore0
+      COMMAND ${CMAKE_COMMAND} -E copy_if_different                      # which executes "cmake - E copy_if_different..."
+          "${PROJECT_SOURCE_DIR}/build/lib/test/TestLibrary.dll"         # <--this is in-file
+          $<TARGET_FILE_DIR:GameServerCore0>)                            # <--this is out-file path
+elseif(UNIX)
+  add_custom_command(TARGET GameServerCore0 POST_BUILD                   # Adds a post-build event to GameServerCore0
+      COMMAND ${CMAKE_COMMAND} -E copy_if_different                      # which executes "cmake - E copy_if_different..."
+          "${PROJECT_SOURCE_DIR}/build/NetworkLibrary/libNetworkLibrary.so"# <--this is in-file
+          $<TARGET_FILE_DIR:GameServerCore0>)                            # <--this is out-file pat
+  add_custom_command(TARGET GameServerCore0 POST_BUILD                   # Adds a post-build event to GameServerCore0
+      COMMAND ${CMAKE_COMMAND} -E copy_if_different                      # which executes "cmake - E copy_if_different..."
+          "${PROJECT_SOURCE_DIR}/build/TestLibrary/libTestLibrary.so"         # <--this is in-file
+          $<TARGET_FILE_DIR:GameServerCore0>)                            # <--this is out-file path
+endif()
