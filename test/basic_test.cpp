@@ -47,7 +47,10 @@ TEST(BasicMessageTest, addGetDebugDecorator)
     ASSERT_NE(nullptr, message);
 
     ASSERT_TRUE(message->addDecorator<DebugDecorator>());
-    ASSERT_NE(nullptr, message->getDecorator<DebugDecorator>());
+    auto deco = message->getDecorator<DebugDecorator>();
+    ASSERT_NE(nullptr, deco);
+    ASSERT_EQ("DebugDecorator", deco->to_string());
+    delete deco;
 };
 
 TEST(DebugDecoTest, to_string)

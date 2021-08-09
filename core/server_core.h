@@ -17,12 +17,23 @@
 
 #pragma once
 #include "../util/config_reader.h"
+#include <vector>
+#include "server_core_module.h"
+
 class ServerCore
 {
-public:
-	ServerCore();
-	~ServerCore();
+private:
+    std::vector<ServerCoreModule *> coreModules;
 
-	void tick();
-	void initialize();
+public:
+    ServerCore();
+    ~ServerCore();
+
+    void tick();
+    void initialize();
+
+    template <typename ServerCoreModule>
+    int addCoreModule()
+    {
+    }
 };

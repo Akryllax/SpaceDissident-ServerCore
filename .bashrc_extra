@@ -1,0 +1,9 @@
+#!/bin/bash
+if [ -z ${WORKSPACE_SETUP+x} ]; then echo "Setting up workspace..."; else echo "Workspace is already set." && exit; fi
+export WORKSPACE_SETUP=1
+export REPO_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+PS1=*$PS1
+alias build_repo='cd $REPO_DIR'
+
+. .env
+echo "Workspace setup done."

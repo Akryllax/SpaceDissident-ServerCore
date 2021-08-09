@@ -6,6 +6,16 @@ set(CMAKE_CXX_STANDARD 17)
 
 project ("GameServerCore0")
 
+################################################################################
+# Add ASIO library
+################################################################################
+find_package(Boost 1.36.0)
+if(Boost_FOUND)
+  include_directories(${Boost_INCLUDE_DIRS})
+  add_executable(asio_test test/asio_test.cpp)
+endif()
+
+
 # Add source to this project's executable.
 set(SOURCES
   "core/server_core.cpp"
@@ -87,72 +97,11 @@ endif()
 #                   DEFINE GTEST BINARIES                                      #
 ################################################################################
 
-# Now simply link against gtest or gtest_main as needed. Eg
-add_executable(core_gtest test/basic_test.cpp ${SOURCES})
-
-target_include_directories(core_gtest PRIVATE "include")
-target_include_directories(core_gtest PRIVATE "message")
-target_include_directories(core_gtest PRIVATE "core")
-target_include_directories(core_gtest PRIVATE "decorator")
-target_include_directories(core_gtest PRIVATE "world")
-target_link_libraries(core_gtest gtest_main)
-# Link TestLibrary
-message("-- Linking TestLibrary")
-target_link_libraries(core_gtest TestLibrary)
-add_test(NAME core_gtest_test COMMAND core_gtest)
-
-# Now simply link against gtest or gtest_main as needed. Eg
-add_executable(world_gtest test/world_test.cpp ${SOURCES})
-
-target_include_directories(world_gtest PRIVATE "include")
-target_include_directories(world_gtest PRIVATE "core")
-target_include_directories(world_gtest PRIVATE "message")
-target_include_directories(world_gtest PRIVATE "decorator")
-target_include_directories(world_gtest PRIVATE "world")
-target_link_libraries(world_gtest gtest_main)
-# Link TestLibrary
-message("-- Linking TestLibrary")
-target_link_libraries(world_gtest TestLibrary)
-add_test(NAME world_gtest_test COMMAND world_gtest)
-
-
-# Now simply link against gtest or gtest_main as needed. Eg
-add_executable(gameobject_test test/gameobject_test.cpp ${SOURCES})
-
-target_include_directories(gameobject_test PRIVATE "include")
-target_include_directories(gameobject_test PRIVATE "core")
-target_include_directories(gameobject_test PRIVATE "message")
-target_include_directories(gameobject_test PRIVATE "decorator")
-target_include_directories(gameobject_test PRIVATE "world")
-target_link_libraries(gameobject_test gtest_main)
-# Link TestLibrary
-message("-- Linking TestLibrary")
-target_link_libraries(gameobject_test TestLibrary)
-add_test(NAME gameobject_test_test COMMAND gameobject_test)
-
-
-# Now simply link against gtest or gtest_main as needed. Eg
-add_executable(networklib_test test/networklib_test.cpp ${SOURCES})
-
-target_include_directories(networklib_test PRIVATE "include")
-target_include_directories(networklib_test PRIVATE "core")
-target_include_directories(networklib_test PRIVATE "message")
-target_include_directories(networklib_test PRIVATE "decorator")
-target_include_directories(networklib_test PRIVATE "world")
-target_link_libraries(networklib_test gtest_main)
-# Link TestLibrary
-message("-- Linking NetworkLibrary")
-target_link_libraries(networklib_test NetworkLibrary)
-add_test(NAME networklib_test_test COMMAND networklib_test)
+include("CMakeLists_GTEST.txt")
 
 # ################################################################################
 # #           PROTOBUF                                                           #
 # ################################################################################
-
-# # Add googletest directly to our build. This defines
-# # the gtest and gtest_main targets.
-# add_subdirectory(${PROJECT_SOURCE_DIR}/tools/protobuf-3.15.5/cmake
-#                  EXCLUDE_FROM_ALL)
 
 
 ################################################################################

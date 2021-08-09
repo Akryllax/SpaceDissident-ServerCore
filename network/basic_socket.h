@@ -16,22 +16,52 @@
  */
 
 #include <sys/types.h>
+#include <cinttypes>
+#include <sys/socket.h>
+#include <memory>
 
 namespace Networking
 {
+    typedef enum
+    {
+        CLIENT,
+        SERVER
+    } socket_mode_t;
+
     class basic_socket
     {
+    protected:
+        int port = 80; // The port you want to uses
+        size_t address_len;
+        int sockfd;
+        socket_mode_t socket_mode;
+
     public:
         basic_socket(int domain, int type, int protocol);
         ~basic_socket();
+
+        bool isServer() { return this->socket_mode == socket_mode_t::CLIENT; };
+
+        int get_fd() { return this->sockfd; };
+
+        virtual int bind(const struct sockaddr *addr, socklen_t addlen);
+        virtual int listen(int sockfd, int backlog);
+        virtual int accept();
+        virtual int connect(const struct sockaddr *add, socklen_t addrlen);
+
+        template<typename T>
+        static std::shared_ptr<T> getServerSocket();
     };
 
     class TCPSocket : public basic_socket
     {
     public:
+        TCPSocket(int domain, int type, int protocol);
     };
 
     class UDPSocket : public basic_socket
     {
+    public:
+        UDPSocket(int domain, int type, int protocol);
     };
 } // namespace Networking
