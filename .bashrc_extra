@@ -3,7 +3,7 @@ if [ -z ${WORKSPACE_SETUP+x} ]; then echo "Setting up workspace..."; else echo "
 export WORKSPACE_SETUP=1
 export REPO_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 PS1=*$PS1
-alias build_repo='cd $REPO_DIR'
+alias build_repo='cd $REPO_DIR/build; cmake -DCMAKE_CXX_COMPILER_LAUNCHER=ccache  .. && make -j 8'
 
 . .env
 echo "Workspace setup done."

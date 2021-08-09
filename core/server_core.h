@@ -35,5 +35,6 @@ public:
     template <typename ServerCoreModule>
     int addCoreModule()
     {
+        return -1;
     }
 };
