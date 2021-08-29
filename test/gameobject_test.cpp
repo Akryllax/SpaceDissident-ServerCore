@@ -26,7 +26,7 @@ TEST(BasicVectorTest, VectorAdd)
 
 int main(int argc, char **argv)
 {
-    basic_setup();
+    spdlog_init("gameobject_gtest.log");
     auto logger = spdlog::get("multi_sink");
     logger->set_level(spdlog::level::trace);
     spdlog::flush_on(spdlog::level::trace);

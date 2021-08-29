@@ -71,3 +71,18 @@ target_link_libraries(server_core_test TestLibrary)
 message("-- Linking NetworkLibrary")
 target_link_libraries(server_core_test NetworkLibrary)
 add_test(NAME server_core_test_test COMMAND server_core_test)
+
+# Now simply link against gtest or gtest_main as needed. Eg
+add_executable(util_gtest test/util_test.cpp ${SOURCES})
+
+target_include_directories(util_gtest PRIVATE "include")
+target_include_directories(util_gtest PRIVATE "message")
+target_include_directories(util_gtest PRIVATE "core")
+target_include_directories(util_gtest PRIVATE "decorator")
+target_include_directories(util_gtest PRIVATE "world")
+target_include_directories(util_gtest PRIVATE "util")
+target_link_libraries(util_gtest gtest_main)
+# Link TestLibrary
+message("-- Linking TestLibrary")
+target_link_libraries(util_gtest TestLibrary)
+add_test(NAME util_gtest_test COMMAND util_gtest)

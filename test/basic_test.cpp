@@ -81,7 +81,7 @@ TEST(DecoTest, searchDecoBasic_1)
 
 int main(int argc, char **argv)
 {
-    basic_setup();
+    spdlog_init("basic_test_gtest.log");
     auto logger = spdlog::get("multi_sink");
     logger->set_level(spdlog::level::trace);
     spdlog::flush_on(spdlog::level::trace);

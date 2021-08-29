@@ -34,11 +34,12 @@ using ms = duration<float, milli>;
 
 int main()
 {
-    basic_setup();
+    spdlog_init();
 
     spdlog::info("Main initialization...");
     ServerCore serverCore;
     serverCore.initialize();
+    spdlog::info("Main initialization done.");
 
     time_point<steady_clock> fpsTimer(steady_clock::now());
     frame FPS{};

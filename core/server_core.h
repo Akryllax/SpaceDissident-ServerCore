@@ -19,6 +19,7 @@
 #include "../util/config_reader.h"
 #include <vector>
 #include "server_core_module.h"
+#include "../util/config_holder.h"
 
 class ServerCore
 {
@@ -37,4 +38,7 @@ public:
     {
         return -1;
     }
+
+protected:
+    ConfigHolder *config;
 };

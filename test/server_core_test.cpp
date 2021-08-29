@@ -13,7 +13,7 @@ TEST(NetworkLibTest, FakeTest)
 
 int main(int argc, char **argv)
 {
-    basic_setup("server_core_test.log");
+    spdlog_init("server_core_test.log");
     auto logger = spdlog::get("multi_sink");
     logger->set_level(spdlog::level::trace);
     spdlog::flush_on(spdlog::level::trace);

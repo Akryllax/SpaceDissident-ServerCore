@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD 17)
 project ("GameServerCore0")
 
 ################################################################################
-# Add ASIO library
+# Add Boost library
 ################################################################################
 find_package(Boost 1.36.0)
 if(Boost_FOUND)
@@ -15,12 +15,23 @@ if(Boost_FOUND)
   add_executable(asio_test test/asio_test.cpp)
 endif()
 
+option (FORCE_COLORED_OUTPUT "Always produce ANSI-colored output (GNU/Clang only)." FALSE)
+if (${FORCE_COLORED_OUTPUT})
+    if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+       add_compile_options (-fdiagnostics-color=always)
+    elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+       add_compile_options (-fcolor-diagnostics)
+    endif ()
+endif ()
+
+
 
 # Add source to this project's executable.
 set(SOURCES
   "core/server_core.cpp"
   "core/game_session.cpp"
   "util/config_reader.cpp"
+  "util/config_holder.cpp"
   "decorator/base_decorator.cpp"
   "decorator/debug_decorator.cpp"
   "message/base_message.cpp"

@@ -20,9 +20,9 @@
 #include "spdlog/sinks/stdout_color_sinks.h" // or "../stdout_sinks.h" if no colors needed
 #include "spdlog/sinks/basic_file_sink.h"
 
-void basic_setup()
+void spdlog_init()
 {
-    spdlog::trace("Running basic_setup()");
+    spdlog::trace("Running spdlog_init()");
     auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
 
     auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>("logs/server_log.log", true);
@@ -35,9 +35,9 @@ void basic_setup()
     logger->set_level(spdlog::level::trace);
 };
 
-void basic_setup(std::string filename)
+void spdlog_init(std::string filename)
 {
-    spdlog::trace("Running basic_setup(filename)");
+    spdlog::trace("Running spdlog_init(filename)");
     auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
 
     auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(fmt::format("logs/{}", filename), true);
