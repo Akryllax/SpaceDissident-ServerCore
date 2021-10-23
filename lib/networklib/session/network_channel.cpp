@@ -1,6 +1,6 @@
 #include "network_channel.h"
 
-using namespace NetworkShared;
+using namespace Networking;
 
 NetworkChannel::NetworkChannel()
 {

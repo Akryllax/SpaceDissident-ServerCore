@@ -57,7 +57,8 @@ public:
     ~CommandProcessor();
 
     void addCommand(Command *command);
-    // cmd_result_t processCommand(const char *command);
+    void removeCommand(Command *command);
+    void processCommands();
 };
 
 void CommandProcessor::addCommand(Command *command){

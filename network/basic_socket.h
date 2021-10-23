@@ -28,7 +28,7 @@ namespace Networking
         SERVER
     } socket_mode_t;
 
-    class basic_socket
+    class BasicSocket
     {
     protected:
         int port = 80; // The port you want to uses
@@ -37,8 +37,8 @@ namespace Networking
         socket_mode_t socket_mode;
 
     public:
-        basic_socket(int domain, int type, int protocol);
-        ~basic_socket();
+        BasicSocket(int domain, int type, int protocol);
+        ~BasicSocket();
 
         bool isServer() { return this->socket_mode == socket_mode_t::CLIENT; };
 
@@ -53,13 +53,13 @@ namespace Networking
         static std::shared_ptr<T> getServerSocket();
     };
 
-    class TCPSocket : public basic_socket
+    class TCPSocket : public BasicSocket
     {
     public:
         TCPSocket(int domain, int type, int protocol);
     };
 
-    class UDPSocket : public basic_socket
+    class UDPSocket : public BasicSocket
     {
     public:
         UDPSocket(int domain, int type, int protocol);
