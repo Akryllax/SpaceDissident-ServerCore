@@ -37,7 +37,7 @@ namespace Networking
     class BasicSocket
     {
     protected:
-        int port = 80; // The port you want to uses
+        int port = 80; // The port you want to use
         size_t address_len;
         int sockfd;
         socket_mode_t socket_mode;

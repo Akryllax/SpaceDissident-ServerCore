@@ -24,6 +24,15 @@ if (${FORCE_COLORED_OUTPUT})
     endif ()
 endif ()
 
+function (AddCommonIncludesToTarget Collection Visibility)
+  target_include_directories(${Collection} ${Visibility} "core")
+  target_include_directories(${Collection} ${Visibility} "decorator")
+  target_include_directories(${Collection} ${Visibility} "include")
+  target_include_directories(${Collection} ${Visibility} "include/spdlog/include")
+  target_include_directories(${Collection} ${Visibility} "message")
+  target_include_directories(${Collection} ${Visibility} "util")
+  target_include_directories(${Collection} ${Visibility} "world")
+endfunction()
 
 
 # Add source to this project's executable.
@@ -53,11 +62,8 @@ add_executable (GameServerCore0
   "GameServerCore0.cpp"
   ${SOURCES}
 )
-target_include_directories(GameServerCore0 PUBLIC "include")
-target_include_directories(GameServerCore0 PUBLIC "message")
-target_include_directories(GameServerCore0 PUBLIC "core")
-target_include_directories(GameServerCore0 PUBLIC "decorator")
-target_include_directories(GameServerCore0 PUBLIC "world")
+
+AddCommonIncludesToTarget(GameServerCore0 PUBLIC)
 
 # Link TestLibrary
 message("-- Linking TestLibrary")
