@@ -1,15 +1,15 @@
 #!/bin/bash
 if [ -z ${WORKSPACE_SETUP+x} ]; then
        	echo "Setting up workspace..."
-else 
-	echo "Workspace is already set." && exit; 
+else
+	echo "Workspace is already set." && exit;
 fi
 export WORKSPACE_SETUP=1
 export REPO_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 PS1=*$PS1
-alias make_build='cd $REPO_DIR/build; cmake -DCMAKE_CXX_COMPILER_LAUNCHER=ccache  .. && make -j 8'
-alias ninja_build='cd $REPO_DIR/build; cmake -GNinja -DCMAKE_CXX_COMPILER_LAUNCHER=ccache  .. && ninja -j 8'
-alias clear_build='cd $REPO_DIR/build; rm -rf *'
+alias make_build='cd ${REPO_DIR}/build && cmake -DCMAKE_CXX_COMPILER_LAUNCHER=ccache  .. && make -j 8'
+alias ninja_build='cd ${REPO_DIR}/build && cmake -GNinja -DCMAKE_CXX_COMPILER_LAUNCHER=ccache  .. && ninja -j 8'
+alias clear_build='cd ${REPO_DIR}/build && rm -rf *'
 
 . .env
 echo "Workspace setup done."
