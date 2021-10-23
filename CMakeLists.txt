@@ -24,6 +24,8 @@ if (${FORCE_COLORED_OUTPUT})
     endif ()
 endif ()
 
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
+
 function (AddCommonIncludesToTarget Collection Visibility)
   target_include_directories(${Collection} ${Visibility} "core")
   target_include_directories(${Collection} ${Visibility} "decorator")
@@ -137,10 +139,10 @@ if (WIN32)
 elseif(UNIX)
   add_custom_command(TARGET GameServerCore0 POST_BUILD                   # Adds a post-build event to GameServerCore0
       COMMAND ${CMAKE_COMMAND} -E copy_if_different                      # which executes "cmake - E copy_if_different..."
-          "${PROJECT_SOURCE_DIR}/build/NetworkLibrary/libNetworkLibrary.so"# <--this is in-file
+          "${PROJECT_SOURCE_DIR}/build/lib/libNetworkLibrary.so"# <--this is in-file
           $<TARGET_FILE_DIR:GameServerCore0>)                            # <--this is out-file pat
   add_custom_command(TARGET GameServerCore0 POST_BUILD                   # Adds a post-build event to GameServerCore0
       COMMAND ${CMAKE_COMMAND} -E copy_if_different                      # which executes "cmake - E copy_if_different..."
-          "${PROJECT_SOURCE_DIR}/build/TestLibrary/libTestLibrary.so"         # <--this is in-file
+          "${PROJECT_SOURCE_DIR}/build/lib/libTestLibrary.so"         # <--this is in-file
           $<TARGET_FILE_DIR:GameServerCore0>)                            # <--this is out-file path
 endif()
