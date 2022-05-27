@@ -2,6 +2,7 @@
 #include "gtest/gtest.h"
 #include "basic_setup.h"
 #include "server_core.h"
+#include "modules/test_core_module.h"
 
 TEST(NetworkLibTest, FakeTest)
 {

@@ -16,7 +16,7 @@ namespace Networking
     class BasicSocket
     {
     protected:
-        int port = 80; // The port you want to uses
+        int port = 80; // The port you want to use
         size_t address_len;
         int sockfd;
         socket_mode_t socket_mode;
@@ -42,11 +42,15 @@ namespace Networking
     {
     public:
         TCPSocket(int domain, int type, int protocol);
+
+        int bind(const struct sockaddr *addr, socklen_t addlen);
     };
 
     class UDPSocket : public BasicSocket
     {
     public:
         UDPSocket(int domain, int type, int protocol);
+
+        int bind(const struct sockaddr *addr, socklen_t addlen);
     };
 } // namespace Networking

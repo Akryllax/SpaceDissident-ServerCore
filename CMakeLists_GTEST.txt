@@ -62,3 +62,15 @@ target_link_libraries(util_gtest gtest_main)
 message("-- Linking TestLibrary")
 target_link_libraries(util_gtest TestLibrary)
 add_test(NAME util_gtest_test COMMAND util_gtest)
+
+# Now simply link against gtest or gtest_main as needed. Eg
+add_executable(socket_test test/socket_test.cpp ${SOURCES})
+AddCommonIncludesToTarget(socket_test PRIVATE)
+target_link_libraries(socket_test gtest_main)
+
+# Link TestLibrary
+message("-- Linking TestLibrary")
+target_link_libraries(socket_test TestLibrary)
+message("-- Linking NetworkLibrary")
+target_link_libraries(socket_test NetworkLibrary)
+add_test(NAME socket_test_test COMMAND socket_test)

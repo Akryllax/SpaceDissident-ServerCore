@@ -32,6 +32,7 @@ function (AddCommonIncludesToTarget Collection Visibility)
   target_include_directories(${Collection} ${Visibility} "include")
   target_include_directories(${Collection} ${Visibility} "include/spdlog/include")
   target_include_directories(${Collection} ${Visibility} "message")
+  target_include_directories(${Collection} ${Visibility} "network")
   target_include_directories(${Collection} ${Visibility} "util")
   target_include_directories(${Collection} ${Visibility} "world")
 endfunction()
@@ -46,6 +47,7 @@ set(SOURCES
   "decorator/base_decorator.cpp"
   "decorator/debug_decorator.cpp"
   "message/base_message.cpp"
+  "core/modules/test_core_module.cpp"
 )
 
 SET(CMAKE_CXX_NO_PRAGMA_FLAGS "-Wno-pragma-once-outside-header")
