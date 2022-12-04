@@ -29,7 +29,7 @@ void ServerCore::tickCoreModules()
 {
     spdlog::trace("ServerCore tickCoreModules");
     auto coreModules = this->getCoreModules();
-    for(auto it = coreModules.begin(); it != coreModules.end(); ++it)
+    for(auto it = coreModules.begin(); it != coreModules.end(); it++)
     {
         (*it)->tick(this->_ctx);
     }

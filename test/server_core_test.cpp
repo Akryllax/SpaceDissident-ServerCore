@@ -6,11 +6,24 @@
 
 TEST(NetworkLibTest, FakeTest)
 {
-    auto serverCoreInstance = std::unique_ptr<ServerCore>();
+    auto serverCoreInstance = std::unique_ptr<ServerCore> { new ServerCore()};
 
     serverCoreInstance->initialize();
     serverCoreInstance->tick();
 };
+
+TEST(BasicMessageTest, addDecoratorBasic)
+{
+    auto serverCoreInstance = std::unique_ptr<ServerCore> { new ServerCore()};
+
+    serverCoreInstance->initialize();
+    serverCoreInstance->tick();
+
+    TestCoreModule testCoreModule;
+
+
+};
+
 
 int main(int argc, char **argv)
 {

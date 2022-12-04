@@ -51,7 +51,7 @@ set(SOURCES
 )
 
 SET(CMAKE_CXX_NO_PRAGMA_FLAGS "-Wno-pragma-once-outside-header")
-
+# set(CMAKE_BUILD_TYPE Debug)
 
 # Add lib/test subdirectory into CMake context
 add_subdirectory("lib/test" TestLibrary)

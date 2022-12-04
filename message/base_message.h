@@ -11,7 +11,6 @@ class BaseDecorator;
 
 class BaseMessage
 {
-
 public:
     BaseMessage();
     ~BaseMessage();

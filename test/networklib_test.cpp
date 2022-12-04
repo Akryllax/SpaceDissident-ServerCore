@@ -2,6 +2,13 @@
 #include "basic_setup.h"
 #include "networklib.h"
 
+constexpr uint16_t BASE_PORT = 25000;
+
+const uint16_t getRandomPort(const uint16_t &base_port, uint16_t maxRange = 256)
+{
+    return rand() % maxRange;
+}
+
 TEST(NetworkLibTest, FakeTest)
 {
     auto *itf = new NetworkShared::NetworkInterface();
