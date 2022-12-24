@@ -2,6 +2,8 @@
 #include <iostream>
 #include <string>
 
+#pragma once
+
 using boost::asio::ip::udp;
 
 class UDPClient {
