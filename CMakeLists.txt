@@ -8,13 +8,19 @@ project ("GameServerCore0")
 
 ################################################################################
 # Add Boost library
-################################################################################
-find_package(Boost 1.36.0)
+
+find_package(Boost 1.40.0 REQUIRED system)
 if(Boost_FOUND)
   include_directories(${Boost_INCLUDE_DIRS})
-  add_executable(asio_test test/asio_test.cpp)
 endif()
+################################################################################
 
+################################################################################
+# enable testing functionality
+enable_testing()
+################################################################################
+
+################################################################################
 option (FORCE_COLORED_OUTPUT "Always produce ANSI-colored output (GNU/Clang only)." FALSE)
 if (${FORCE_COLORED_OUTPUT})
     if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
@@ -23,7 +29,9 @@ if (${FORCE_COLORED_OUTPUT})
        add_compile_options (-fcolor-diagnostics)
     endif ()
 endif ()
+################################################################################
 
+################################################################################
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 
 function (AddCommonIncludesToTarget Collection Visibility)
@@ -35,6 +43,7 @@ function (AddCommonIncludesToTarget Collection Visibility)
   target_include_directories(${Collection} ${Visibility} "network")
   target_include_directories(${Collection} ${Visibility} "util")
   target_include_directories(${Collection} ${Visibility} "world")
+  target_include_directories(${Collection} ${Visibility} Boost::system)
 endfunction()
 
 
@@ -49,8 +58,9 @@ set(SOURCES
   "message/base_message.cpp"
   "core/modules/test_core_module.cpp"
 )
+################################################################################
 
-SET(CMAKE_CXX_NO_PRAGMA_FLAGS "-Wno-pragma-once-outside-header")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-pragma-once-outside-header")
 # set(CMAKE_BUILD_TYPE Debug)
 
 # Add lib/test subdirectory into CMake context
@@ -117,13 +127,9 @@ endif()
 ################################################################################
 #                   DEFINE GTEST BINARIES                                      #
 ################################################################################
-
 include("CMakeLists_GTEST.txt")
 
-# ################################################################################
-# #           PROTOBUF                                                           #
-# ################################################################################
-
+include("CMakeLists.txt.test")
 
 ################################################################################
 #                      Copy dynamic libs after build                           #

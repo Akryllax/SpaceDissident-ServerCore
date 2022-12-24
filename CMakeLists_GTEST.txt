@@ -74,3 +74,9 @@ target_link_libraries(socket_test TestLibrary)
 message("-- Linking NetworkLibrary")
 target_link_libraries(socket_test NetworkLibrary)
 add_test(NAME socket_test_test COMMAND socket_test)
+
+# Now simply link against gtest or gtest_main as needed. Eg
+add_executable(asio_test test/asio_test.cpp ${SOURCES})
+AddCommonIncludesToTarget(asio_test PRIVATE)
+target_link_libraries(asio_test gtest_main)
+target_link_libraries(asio_test Boost::system)
