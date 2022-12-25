@@ -23,9 +23,9 @@ TEST_F(UDPTest, ConnectionTest)
 
   // Create threads for the server and client
   std::thread server_thread([&]() { server.run(); });
-  std::thread client_thread([&]() { client.start(); client.write("Test message"); });
+  std::thread client_thread([&]() { client.start(); client.write("Test message"); io_context.poll(); });
 
-  std::this_thread::sleep_for(std::chrono::seconds(1));
+  std::this_thread::sleep_for(std::chrono::milliseconds(100));
   server.stop();
 
   // Wait for the threads to finish

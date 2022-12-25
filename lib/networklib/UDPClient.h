@@ -28,16 +28,20 @@ class UDPClient
       , io_context_(io_context)
   { }
 
+  ~UDPClient()
+  {
+    socket_->close();
+  }
+
   void start()
   {
     // Create the socket and open it
-    socket_ = std::make_unique<udp::socket>(io_context_, udp::v4());
+    std::unique_ptr<udp::socket> socket_ptr(new udp::socket(io_context_));
 
-    // Set the endpoint for the socket
-    udp::endpoint endpoint_(boost::asio::ip::make_address(host_), port_);
+    // Open the socket
+    socket_ptr->open(udp::v4());
 
-    // Bind the socket to the endpoint
-    // socket_->bind(endpoint_);
+    socket_ = std::move(socket_ptr);
   }
 
   void write_async(const std::string& message)
