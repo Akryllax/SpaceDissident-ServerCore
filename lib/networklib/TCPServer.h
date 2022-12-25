@@ -1,13 +1,19 @@
 #include <iostream>
 #include <string>
 #include <boost/asio.hpp>
+#include "TCPSession.h"
+
+#pragma once
 
 using boost::asio::ip::tcp;
 
-class TcpServer {
+class TCPServer {
+
+  friend class asio_udp_test;
+
 public:
-  TcpServer(boost::asio::io_context& io_context, short port)
-      : acceptor_(io_context, tcp::endpoint(tcp::v4(), port)),
+  TCPServer(boost::asio::io_context& io_context, const std::string& port)
+      : acceptor_(io_context, tcp::endpoint(tcp::v4(), stoi(port))),
         socket_(io_context)
   {
     do_accept();

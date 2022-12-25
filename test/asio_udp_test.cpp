@@ -1,12 +1,14 @@
 #include <exception>
 #include <gtest/gtest.h>
 
+#include "TCPClient.h"
+#include "TCPServer.h"
 #include "UDPClient.h"
 #include "UDPServer.h"
+#include <chrono>
 #include <iostream>
 #include <ostream>
 #include <thread>
-#include <chrono>
 
 class UDPTest : public testing::Test
 {
@@ -14,7 +16,7 @@ class UDPTest : public testing::Test
   void TearDown(){};
 };
 
-TEST_F(UDPTest, ConnectionTest)
+TEST_F(UDPTest, UDPConnectionTest)
 {
   // Create the IO context and client and server objects
   boost::asio::io_context io_context;
@@ -23,7 +25,11 @@ TEST_F(UDPTest, ConnectionTest)
 
   // Create threads for the server and client
   std::thread server_thread([&]() { server.run(); });
-  std::thread client_thread([&]() { client.start(); client.write("Test message"); io_context.poll(); });
+  std::thread client_thread([&]() {
+    client.start();
+    client.write("Test message");
+    io_context.poll();
+  });
 
   std::this_thread::sleep_for(std::chrono::milliseconds(100));
   server.stop();
@@ -31,7 +37,6 @@ TEST_F(UDPTest, ConnectionTest)
   // Wait for the threads to finish
   server_thread.join();
   client_thread.join();
-
 
   ASSERT_EQ(server.received_messages().size(), 1);
   ASSERT_EQ(server.received_messages()[0], "Test message");

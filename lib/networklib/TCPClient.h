@@ -4,9 +4,9 @@
 
 using boost::asio::ip::tcp;
 
-class TcpClient {
+class TCPClient {
 public:
-  TcpClient(boost::asio::io_context& io_context,
+  TCPClient(boost::asio::io_context& io_context,
          const std::string& host,
          const std::string& port)
       : resolver_(io_context),
