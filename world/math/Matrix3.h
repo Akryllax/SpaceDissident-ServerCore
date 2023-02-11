@@ -30,6 +30,7 @@
 #include "Vector3.h"
 #include <cassert>
 #include <limits>
+#include <iostream>
 
 namespace World
 {
