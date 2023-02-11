@@ -27,133 +27,171 @@
 #define VECTOR2_H
 
 // Libraries
-#include <math.h>
 #include <assert.h>
+#include <math.h>
 
-namespace World {
+namespace World
+{
 
 // Class Vector2
 // This class represents a 2D vector.
-class Vector2 {
+class Vector2
+{
 
-    public:
+public:
+  // -------------------- Attributes -------------------- //
 
-        // -------------------- Attributes -------------------- //
+  // Components of the vector
+  float x, y;
 
-        // Components of the vector
-        float x, y;
+  // -------------------- Methods -------------------- //
 
+  // Constructor
+  Vector2(float x = 0, float y = 0)
+      : x(x)
+      , y(y)
+  { }
 
-        // -------------------- Methods -------------------- //
+  // Constructor
+  Vector2(const Vector2& vector)
+      : x(vector.x)
+      , y(vector.y)
+  { }
 
-        // Constructor
-        Vector2(float x=0, float y=0) : x(x), y(y) {}
+  // + operator
+  Vector2 operator+(const Vector2& v) const
+  {
+    return Vector2(x + v.x, y + v.y);
+  }
 
-        // Constructor
-        Vector2(const Vector2& vector) : x(vector.x), y(vector.y) {}
+  // += operator
+  Vector2& operator+=(const Vector2& v)
+  {
+    x += v.x;
+    y += v.y;
+    return *this;
+  }
 
-        // + operator
-        Vector2 operator+(const Vector2 &v) const {
-            return Vector2(x + v.x, y + v.y);
-        }
+  // - operator
+  Vector2 operator-(const Vector2& v) const
+  {
+    return Vector2(x - v.x, y - v.y);
+  }
 
-        // += operator
-        Vector2& operator+=(const Vector2 &v) {
-            x += v.x; y += v.y;
-            return *this;
-        }
+  // -= operator
+  Vector2& operator-=(const Vector2& v)
+  {
+    x -= v.x;
+    y -= v.y;
+    return *this;
+  }
 
-        // - operator
-        Vector2 operator-(const Vector2 &v) const {
-            return Vector2(x - v.x, y - v.y);
-        }
+  // = operator
+  Vector2& operator=(const Vector2& vector)
+  {
+    if(&vector != this)
+    {
+      x = vector.x;
+      y = vector.y;
+    }
+    return *this;
+  }
 
-        // -= operator
-        Vector2& operator-=(const Vector2 &v) {
-            x -= v.x; y -= v.y;
-            return *this;
-        }
+  // == operator
+  bool operator==(const Vector2& v) const
+  {
+    return x == v.x && y == v.y;
+  }
 
-        // = operator
-        Vector2& operator=(const Vector2& vector) {
-            if (&vector != this) {
-                x = vector.x;
-                y = vector.y;
-            }
-            return *this;
-        }
+  // * operator
+  Vector2 operator*(float f) const
+  {
+    return Vector2(f * x, f * y);
+  }
 
-        // == operator
-        bool operator==(const Vector2 &v) const {
-            return x == v.x && y == v.y;
-        }
+  // *= operator
+  Vector2& operator*=(float f)
+  {
+    x *= f;
+    y *= f;
+    return *this;
+  }
 
-        // * operator
-        Vector2 operator*(float f) const {
-            return Vector2(f*x, f*y);
-        }
+  // / operator
+  Vector2 operator/(float f) const
+  {
+    assert(f != 0);
+    float inv = 1.f / f;
+    return Vector2(x * inv, y * inv);
+  }
 
-        // *= operator
-        Vector2 &operator*=(float f) {
-            x *= f; y *= f;
-            return *this;
-        }
+  // /= operator
+  Vector2& operator/=(float f)
+  {
+    assert(f != 0);
+    float inv = 1.f / f;
+    x *= inv;
+    y *= inv;
+    return *this;
+  }
 
-        // / operator
-        Vector2 operator/(float f) const {
-            assert(f!=0);
-            float inv = 1.f / f;
-            return Vector2(x * inv, y * inv);
-        }
+  // - operator
+  Vector2 operator-() const
+  {
+    return Vector2(-x, -y);
+  }
 
-        // /= operator
-        Vector2 &operator/=(float f) {
-            assert(f!=0);
-            float inv = 1.f / f;
-            x *= inv; y *= inv;
-            return *this;
-        }
+  // [] operator
+  float& operator[](int i)
+  {
+    assert(i >= 0 && i <= 1);
+    switch(i)
+    {
+    case 0:
+      return x;
+    case 1:
+      return y;
+    }
+    return y;
+  }
 
-        // - operator
-        Vector2 operator-() const {
-            return Vector2(-x, -y);
-        }
+  // Normalize the vector and return it
+  Vector2 normalize()
+  {
+    float l = length();
+    assert(l > 0);
+    x /= l;
+    y /= l;
+    return *this;
+  }
 
-        // [] operator
-        float &operator[](int i) {
-            assert(i >= 0 && i <= 1);
-            switch (i) {
-                case 0: return x;
-                case 1: return y;
-            }
-            return y;
-        }
+  // Clamp the vector values between 0 and 1
+  Vector2 clamp01()
+  {
+    if(x > 1.f)
+      x = 1.f;
+    else if(x < 0.f)
+      x = 0.f;
+    if(y > 1.f)
+      y = 1.f;
+    else if(y < 0.f)
+      y = 0.f;
+    return *this;
+  }
 
-        // Normalize the vector and return it
-        Vector2 normalize() {
-            float l = length();
-            assert(l > 0);
-            x /= l;
-            y /= l;
-            return *this;
-        }
+  // Return the squared length of the vector
+  float lengthSquared() const
+  {
+    return x * x + y * y;
+  }
 
-        // Clamp the vector values between 0 and 1
-        Vector2 clamp01() {
-            if (x>1.f) x=1.f;
-            else if (x<0.f) x=0.f;
-            if (y>1.f) y=1.f;
-            else if (y<0.f) y=0.f;
-            return *this;
-        }
-
-        // Return the squared length of the vector
-        float lengthSquared() const { return x*x + y*y; }
-
-        // Return the length of the vector
-        float length() const { return sqrt(lengthSquared()); }
+  // Return the length of the vector
+  float length() const
+  {
+    return sqrt(lengthSquared());
+  }
 };
 
-}
+} // namespace World
 
 #endif

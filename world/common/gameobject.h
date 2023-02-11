@@ -2,9 +2,9 @@
 
 namespace World
 {
-    class GameObject
-    {
-    public:
-        World::Transform transform;
-    };
+class GameObject
+{
+public:
+  World::Transform transform;
+};
 } // namespace World

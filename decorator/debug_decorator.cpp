@@ -8,10 +8,10 @@ const uint16_t DebugDecorator::DECO_ID = DECO_ID_DEBUG;
 
 std::string DebugDecorator::to_string()
 {
-    return "DebugDecorator";
+  return "DebugDecorator";
 };
 
 void DebugDecorator::initialize()
 {
-    spdlog::trace("Creating new DebugDecorator");
+  spdlog::trace("Creating new DebugDecorator");
 }

@@ -12,9 +12,9 @@
 class DLLExport TestLibrary
 {
 public:
-   TestLibrary(void);
-   ~TestLibrary(void);
+  TestLibrary(void);
+  ~TestLibrary(void);
 
-   void hello();
-   static void helloStatic();
+  void hello();
+  static void helloStatic();
 };

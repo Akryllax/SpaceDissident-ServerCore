@@ -6,62 +6,61 @@
 
 typedef enum
 {
-    // Command result
-    CMD_RESULT_OK,
-    CMD_RESULT_ERROR,
-    CMD_RESULT_INVALID_ARGUMENT,
-    CMD_RESULT_INVALID_COMMAND,
-    CMD_RESULT_INVALID_COMMAND_ARGUMENT,
-    CMD_RESULT_INVALID_COMMAND_ARGUMENT_COUNT
+  // Command result
+  CMD_RESULT_OK,
+  CMD_RESULT_ERROR,
+  CMD_RESULT_INVALID_ARGUMENT,
+  CMD_RESULT_INVALID_COMMAND,
+  CMD_RESULT_INVALID_COMMAND_ARGUMENT,
+  CMD_RESULT_INVALID_COMMAND_ARGUMENT_COUNT
 } cmd_result_t;
 
 class Command
 {
 public:
-    Command();
-    ~Command();
+  Command();
+  ~Command();
 
-    const std::string getName() const;
-    const std::string getDescription() const;
-    const std::string getUsage() const;
-    const std::string getHelp() const;
+  const std::string getName() const;
+  const std::string getDescription() const;
+  const std::string getUsage() const;
+  const std::string getHelp() const;
 
-    virtual bool run(const std::vector<std::string> &args);
+  virtual bool run(const std::vector<std::string>& args);
 
 protected:
-    std::string name;
-    std::string description;
-    std::string usage;
-    std::string help;
+  std::string name;
+  std::string description;
+  std::string usage;
+  std::string help;
 
-    uint8_t argCount;
+  uint8_t argCount;
 };
 
 class CommandQueue
 {
 protected:
-    std::vector<std::unique_ptr<Command>> commands;
+  std::vector<std::unique_ptr<Command>> commands;
 
 public:
-    CommandQueue();
-    ~CommandQueue();
+  CommandQueue();
+  ~CommandQueue();
 
-    void addCommand(std::shared_ptr<Command> command);
-    void processCommands();
+  void addCommand(std::shared_ptr<Command> command);
+  void processCommands();
 };
 
 class CommandProcessor
 {
 public:
-    CommandProcessor();
-    ~CommandProcessor();
+  CommandProcessor();
+  ~CommandProcessor();
 
-    void addCommand(Command *command);
-    void removeCommand(Command *command);
-    void processCommands();
+  void addCommand(Command* command);
+  void removeCommand(Command* command);
+  void processCommands();
 };
 
-void CommandProcessor::addCommand(Command *command){
+void CommandProcessor::addCommand(Command* command){
 
 };
-

@@ -3,5 +3,5 @@
 class GameSession
 {
 public:
-	GameSession();
+  GameSession();
 };

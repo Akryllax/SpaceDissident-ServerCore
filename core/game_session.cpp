@@ -5,5 +5,5 @@
 
 GameSession::GameSession()
 {
-    spdlog::trace("Creating new GaneSession");
+  spdlog::trace("Creating new GaneSession");
 };

@@ -14,7 +14,7 @@ class UDPServer
 {
   friend class UDPTest;
 
-  public:
+public:
   UDPServer(boost::asio::io_context& io_context, const std::string& host, const std::string& port)
       : socket_(io_context, udp::endpoint(udp::v4(), std::stoul(port)))
       , endpoint_(boost::asio::ip::make_address(host), std::stoul(port))
@@ -48,7 +48,7 @@ class UDPServer
     return received_messages_;
   }
 
-  private:
+private:
   void do_receive()
   {
     try

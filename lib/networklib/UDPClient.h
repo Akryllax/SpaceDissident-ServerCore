@@ -11,14 +11,14 @@ using boost::asio::ip::udp;
 
 class UDPClient
 {
-  private:
+private:
   std::unique_ptr<udp::socket> socket_;
   udp::endpoint endpoint_;
   const boost::asio::io_context& io_context_;
   const std::string& host_;
   const unsigned short port_;
 
-  public:
+public:
   static const int BUFFER_SIZE = 1024;
 
   UDPClient(boost::asio::io_context& io_context, const std::string& host, const std::string& port)

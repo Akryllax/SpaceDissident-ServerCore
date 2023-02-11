@@ -3,13 +3,13 @@
 
 class ISerializable
 {
-    public:
-    long UQ_ID;
+public:
+  long UQ_ID;
 
-    public:
-    virtual std::string toString() {};
+public:
+  virtual std::string toString(){};
 
-    // public:
-    // template<typename T>
-    // static T* fromString(std::string serialized) {};
+  // public:
+  // template<typename T>
+  // static T* fromString(std::string serialized) {};
 };

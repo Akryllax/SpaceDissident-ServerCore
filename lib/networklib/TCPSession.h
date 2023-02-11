@@ -1,12 +1,15 @@
+#include <boost/asio.hpp>
 #include <iostream>
 #include <string>
-#include <boost/asio.hpp>
 
 using boost::asio::ip::tcp;
 
-class TcpSession : public std::enable_shared_from_this<TcpSession> {
+class TcpSession : public std::enable_shared_from_this<TcpSession>
+{
 public:
-  TcpSession(tcp::socket socket) : socket_(std::move(socket)) {}
+  TcpSession(tcp::socket socket)
+      : socket_(std::move(socket))
+  { }
 
   void start()
   {
@@ -19,7 +22,8 @@ private:
     auto self(shared_from_this());
     socket_.async_read_some(boost::asio::buffer(data_, max_length),
                             [this, self](boost::system::error_code ec, std::size_t length) {
-                              if (!ec) {
+                              if(!ec)
+                              {
                                 do_write(length);
                               }
                             });
@@ -28,15 +32,20 @@ private:
   void do_write(std::size_t length)
   {
     auto self(shared_from_this());
-    boost::asio::async_write(socket_, boost::asio::buffer(data_, length),
-                              [this, self](boost::system::error_code ec, std::size_t /*length*/) {
-                                if (!ec) {
-                                  do_read();
-                                }
-                              });
+    boost::asio::async_write(socket_,
+                             boost::asio::buffer(data_, length),
+                             [this, self](boost::system::error_code ec, std::size_t /*length*/) {
+                               if(!ec)
+                               {
+                                 do_read();
+                               }
+                             });
   }
 
   tcp::socket socket_;
-  enum { max_length = 1024 };
+  enum
+  {
+    max_length = 1024
+  };
   char data_[max_length];
 };

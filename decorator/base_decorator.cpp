@@ -8,13 +8,12 @@ const uint16_t BaseDecorator::DECO_ID = DECO_ID_BASE;
 
 BaseDecorator::BaseDecorator()
 {
-    this->initialize();
+  this->initialize();
 };
-
 
 void BaseDecorator::initialize()
 {
-    spdlog::trace("Creating new BaseDecorator");
+  spdlog::trace("Creating new BaseDecorator");
 }
 
 /**
@@ -24,5 +23,5 @@ void BaseDecorator::initialize()
  */
 void BaseDecorator::visit(const BaseMessage& msg)
 {
-    //Base decorator does nothing
+  //Base decorator does nothing
 }
