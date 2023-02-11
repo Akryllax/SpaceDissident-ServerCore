@@ -12,11 +12,15 @@
 
 class UDPTest : public testing::Test
 {
-  void SetUp(){};
-  void TearDown(){};
+  void SetUp() final {
+
+  };
+  void TearDown() final {
+
+  };
 };
 
-TEST_F(UDPTest, UDPConnectionTest)
+TEST_F(UDPTest, UDPConnectionTest_Client2Server)
 {
   // Create the IO context and client and server objects
   boost::asio::io_context io_context;
@@ -42,12 +46,38 @@ TEST_F(UDPTest, UDPConnectionTest)
   ASSERT_EQ(server.received_messages()[0], "Test message");
 }
 
-int main(int argc, char** argv)
+TEST_F(UDPTest, UDPConnectionTest_Server2Client)
 {
-  // Enable logging of std::cerr output
-  testing::GTEST_FLAG(also_run_disabled_tests) = true;
+//   // Create the IO context and client and server objects
+//   boost::asio::io_context io_context;
+//   UDPServer server(io_context, "127.0.0.1", "8081");
+//   UDPClient client(io_context, "127.0.0.1", "8081");
 
-  // Run the testswda
-  testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
+//   // Create threads for the server and client
+//   std::thread server_thread([&]() { server.run(); server.write(); });
+//   std::thread client_thread([&]() {
+//     client.start();
+//     client.receive();
+//     io_context.poll();
+//   });
+
+//   std::this_thread::sleep_for(std::chrono::milliseconds(100));
+//   server.stop();
+
+//   // Wait for the threads to finish
+//   server_thread.join();
+//   client_thread.join();
+
+//   ASSERT_EQ(server.received_messages().size(), 1);
+//   ASSERT_EQ(server.received_messages()[0], "Test message");
+// }
+
+// int main(int argc, char** argv)
+// {
+//   // Enable logging of std::cerr output
+//   testing::GTEST_FLAG(also_run_disabled_tests) = true;
+
+//   // Run the testswda
+//   testing::InitGoogleTest(&argc, argv);
+//   return RUN_ALL_TESTS();
 }

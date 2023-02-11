@@ -11,21 +11,22 @@ using boost::asio::ip::udp;
 
 class UDPClient
 {
-
   private:
   std::unique_ptr<udp::socket> socket_;
   udp::endpoint endpoint_;
-  boost::asio::io_context& io_context_;
+  const boost::asio::io_context& io_context_;
   const std::string& host_;
-  const unsigned long port_;
+  const unsigned short port_;
 
   public:
+  static const int BUFFER_SIZE = 1024;
+
   UDPClient(boost::asio::io_context& io_context, const std::string& host, const std::string& port)
       : socket_(std::make_unique<udp::socket>(io_context))
       , endpoint_(boost::asio::ip::make_address(host), std::stoul(port))
+      , io_context_(io_context)
       , host_(host)
       , port_(std::stoul(port))
-      , io_context_(io_context)
   { }
 
   ~UDPClient()
@@ -36,7 +37,7 @@ class UDPClient
   void start()
   {
     // Create the socket and open it
-    std::unique_ptr<udp::socket> socket_ptr(new udp::socket(io_context_));
+    auto socket_ptr = std::make_unique<udp::socket>(io_context_);
 
     // Open the socket
     socket_ptr->open(udp::v4());
@@ -60,5 +61,22 @@ class UDPClient
       // Handle error here
       std::cerr << "Errored: " << ec.message() << std::endl;
     }
+  }
+
+  std::string receive()
+  {
+    std::string response;
+    udp::endpoint sender_endpoint;
+    try
+    {
+      boost::asio::streambuf buffer;
+      socket_->receive_from(buffer.prepare(BUFFER_SIZE), sender_endpoint);
+      response = boost::asio::buffer_cast<const char*>(buffer.data());
+    }
+    catch(std::exception& e)
+    {
+      std::cerr << "Error: " << e.what() << std::endl;
+    }
+    return response;
   }
 };
