@@ -3,4 +3,4 @@
 #include <map>
 #include <string>
 
-typedef std::map<std::string, std::any> ServerContext;
+using ServerContext = std::map<std::string, std::any>;

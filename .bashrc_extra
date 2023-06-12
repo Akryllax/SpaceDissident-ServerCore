@@ -10,7 +10,7 @@ PS1=*$PS1
 alias make_build='cd ${REPO_DIR}/build && cmake -DCMAKE_CXX_COMPILER_LAUNCHER=ccache  .. && make -j 8'
 alias ninja_build='cd ${REPO_DIR}/build && cmake -GNinja -DCMAKE_CXX_COMPILER_LAUNCHER=ccache  .. && ninja -j 8'
 alias clear_build='cd ${REPO_DIR}/build && rm -rf *'
-
+alias gen_uml='clang-uml && plantuml -tsvg docs/*.puml'
 . .env
 echo "Workspace setup done."
 function repo_env_edit()

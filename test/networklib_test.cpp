@@ -1,19 +1,20 @@
 #include "basic_setup.h"
 #include "networklib.h"
 #include "gtest/gtest.h"
+#include <memory>
+#include <random>
 
 constexpr uint16_t BASE_PORT = 25000;
 
-const uint16_t getRandomPort(const uint16_t& base_port, uint16_t maxRange = 256)
+uint16_t getRandomPort(const uint16_t& base_port = BASE_PORT, uint16_t maxRange = 256)
 {
-  return rand() % maxRange;
+  return base_port + (rand() % maxRange);
 }
 
 TEST(NetworkLibTest, FakeTest)
 {
-  auto* itf = new NetworkShared::NetworkInterface();
+  auto itf = std::make_unique<NetworkShared::NetworkInterface>();
   GTEST_ASSERT_EQ(5, itf->testFunction());
-  delete itf;
 };
 
 int main(int argc, char** argv)
