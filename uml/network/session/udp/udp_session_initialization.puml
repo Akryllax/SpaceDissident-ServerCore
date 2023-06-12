@@ -1,0 +1,85 @@
+@startuml UDP socket - initialize session
+title UDP socket - initialize session
+
+' SID: Session ID - UQ UINT
+' GID: Game ID - UQ UINT
+' RID: Room ID - UQ UINT
+' SCS: Session Current Status - Blob
+' SDU: Session Delta Update
+' WRTID: World Relative Timestamp ID
+
+== Request Session ID ==
+autonumber
+
+LocalClient -> Server : request SID
+activate Server
+return return SID
+|||
+== Request Initial Session Current Status data ==
+autonumber
+
+LocalClient->Server:request SCS with SID
+activate Server
+
+Server->Sessions:retrieve SCS by SID
+database Sessions
+activate Sessions
+group Session check [Session exists]
+    Sessions->Sessions:Retrieve session info
+    else Session needs creation
+    autonumber 3
+    Sessions->Sessions:Generate new session for SID
+end
+
+return SCS (full session sync pkt)
+return SCS (full session sync pkt)
+|||
+... active connection ...
+== request SCS delta update ==
+autonumber
+
+LocalClient->Server:request SDU (send WRTID)
+activate Server
+
+... active connection ...
+== push update ==
+autonumber
+
+LocalClient->Server: push status update
+activate Server
+Server->Sessions:check session
+activate Sessions
+group Session check [Session exists]
+    Sessions->Sessions:Retrieve session info
+    else Session needs creation
+    autonumber 3
+    Sessions->Sessions:Generate new session for SID
+end
+return SID status
+Server->Server:Valide & process new data
+Server-->ReplicatedClients: Push update to other client's sessions
+Server-->LocalClient: return request status
+deactivate Server
+
+
+... active connection ...
+== Request logout ==
+autonumber
+
+LocalClient->Server: request proper logout
+activate Server
+Server->Sessions:check session
+activate Sessions
+group Session check [Session exists]
+    Sessions->Sessions:Retrieve session info
+    else Session needs creation
+    autonumber 3
+    Sessions->Sessions:Generate new session for SID
+end
+return SID status
+Server->Server: Cleanup session data and save to DB
+Server-->ReplicatedClients: Push update to other client's sessions
+Server-->LocalClient: return request status
+deactivate Server
+
+@enduml

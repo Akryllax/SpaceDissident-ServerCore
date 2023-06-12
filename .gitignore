@@ -14,5 +14,4 @@ _deps
 build
 *.log
 .cache/**
-*.puml
-*.svg
+docs/**/generated/*
