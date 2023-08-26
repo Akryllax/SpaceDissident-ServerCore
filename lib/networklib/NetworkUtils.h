@@ -1,7 +1,9 @@
+#pragma once
+
 #include <stdexcept>
 #include <string>
 
-namespace NetworkLib
+namespace NetworkCore::Utils
 {
 inline unsigned short convertToPort(const std::string& portStr)
 {

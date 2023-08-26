@@ -19,19 +19,19 @@ class UDPServer : public INetworkChannel
 {
 public:
   UDPServer(boost::asio::io_context& io_context, const std::string& host, const std::string& port)
-      : socket_(io_context, udp::endpoint(udp::v4(), NetworkLib::convertToPort(port)))
-      , endpoint_(boost::asio::ip::make_address(host), NetworkLib::convertToPort(port))
+      : socket_(io_context, udp::endpoint(udp::v4(), NetworkCore::Utils::convertToPort(port)))
+      , endpoint_(boost::asio::ip::make_address(host), NetworkCore::Utils::convertToPort(port))
       , io_context_(io_context)
   { }
 
   UDPServer(const std::string& host, const std::string& port)
-      : socket_(NetworkCore::IoContextWrapper::getInstance(),
-                udp::endpoint(udp::v4(), NetworkLib::convertToPort(port)))
-      , endpoint_(boost::asio::ip::make_address(host), NetworkLib::convertToPort(port))
-      , io_context_(NetworkCore::IoContextWrapper::getInstance())
+      : socket_(NetworkCore::ServerIoContextWrapper::getInstance(),
+                udp::endpoint(udp::v4(), NetworkCore::Utils::convertToPort(port)))
+      , endpoint_(boost::asio::ip::make_address(host), NetworkCore::Utils::convertToPort(port))
+      , io_context_(NetworkCore::ServerIoContextWrapper::getInstance())
   { }
 
-  void run()
+  void run() override
   {
     running = true;
     do_receive();
