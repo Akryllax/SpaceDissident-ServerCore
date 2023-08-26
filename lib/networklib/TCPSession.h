@@ -19,17 +19,12 @@ private:
 
 private:
   tcp::socket socket_;
-  enum
-  {
-    max_length = 1024
-  };
-  std::string data_;
+  enum { max_length = 1024 };
+  char data_[max_length]; // Changed from std::string to char array
 
 public:
   TcpSession(tcp::socket socket, uint16_t session_id)
-      : SESSION_ID(session_id)
-      , socket_(std::move(socket))
-  { }
+      : SESSION_ID(session_id), socket_(std::move(socket)) {}
 
   ~TcpSession()
   {
@@ -38,31 +33,13 @@ public:
 
   void close()
   {
-    return socket_.close();
-  };
-
-  void write_pending(){
-      //TODO Implement
-  };
-
-  void read_incoming() const {
-      //TODO
-  };
-
-  bool hasIncommingMessages() const
-  {
-    return !incoming_messages_.empty();
+    socket_.close();
   }
 
-  std::optional<std::string> popIncomingMessage()
-  {
-    if(incoming_messages_.empty())
-    {
-      return std::nullopt;
-    }
-
-    std::string message = incoming_messages_.front();
-    incoming_messages_.pop();
-    return message;
-  }
+  void write_pending();
+  void read_incoming();
+  bool hasIncomingMessages() const;
+  std::optional<std::string> popIncomingMessage();
 };
+
+// Implement write_pending and read_incoming as shown above
