@@ -5,7 +5,7 @@
 // #include <concepts>
 #include "base_decorator.h"
 #include "base_message.h"
-#include "deco.h"
+#include "decoUtils.h"
 #include "message_type_id.h"
 
 const uint16_t BaseMessage::MSG_TYPE_ID = MSG_TYPE_ID_BASE;

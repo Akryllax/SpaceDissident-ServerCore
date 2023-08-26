@@ -3,7 +3,7 @@
 #include <vector>
 // #include <memory>
 #include "base_decorator.h"
-#include "deco.h"
+#include "decoUtils.h"
 #include "spdlog/spdlog.h"
 
 class BaseDecorator;
@@ -27,7 +27,7 @@ public:
     spdlog::trace("BaseMessage::getDecorator");
     spdlog::trace("BaseMessage->_decoList size: {}", this->_decoList.size());
 
-    return DecoratorUtils::search_deco<T>(this->_decoList);
+    return DecoratorUtils::searchDecorator<T>(this->_decoList);
   }
 
   template <typename T>
@@ -35,7 +35,7 @@ public:
   {
     spdlog::trace("BaseMessage::addDecorator");
 
-    auto item = DecoratorUtils::search_deco<T>(this->_decoList);
+    auto item = DecoratorUtils::searchDecorator<T>(this->_decoList);
     bool result = false;
 
     spdlog::trace("BaseMessage::addDecorator isDecoratorPresent: {}", item != nullptr);
@@ -56,7 +56,7 @@ public:
   {
     spdlog::trace("BaseMessage::removeDecorator");
 
-    auto item = DecoratorUtils::search_deco<T>(this->_decoList);
+    auto item = DecoratorUtils::searchDecorator<T>(this->_decoList);
     bool result = false;
     if(item)
     {

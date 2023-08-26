@@ -6,7 +6,7 @@
 
 const uint16_t DebugDecorator::DECO_ID = DECO_ID_DEBUG;
 
-std::string DebugDecorator::to_string()
+std::string DebugDecorator::to_string() const
 {
   return "DebugDecorator";
 };

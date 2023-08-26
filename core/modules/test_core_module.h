@@ -1,6 +1,6 @@
 #pragma once
 
-#include "server_core_module.h"
+#include "ServerCoreModule.h"
 
 class TestCoreModule : public ServerCoreModule
 {

@@ -1,9 +1,9 @@
 #pragma once
 
+#include "ServerCoreModule.h"
 #include "config_holder.h"
 #include "config_reader.h"
 #include "server_core_ctx.h"
-#include "server_core_module.h"
 #include <memory>
 #include <vector>
 
@@ -28,16 +28,12 @@ public:
     initialize();
   }
 
-  // ~ServerCore()
-  // {
-  //   spdlog::trace("ServerCore deconstructor");
-  // };
-
   template <typename T>
   MODULE_STATUS addCoreModule(std::unique_ptr<T> coreModule)
   {
     if(!coreModule)
     {
+      spdlog::error("Failed to add core module: nullptr received");
       return MODULE_STATUS::ERROR;
     }
 
@@ -47,10 +43,10 @@ public:
     return MODULE_STATUS::SUCCESS;
   }
 
-  void tick()
+  void tick() const
   {
     spdlog::trace("ServerCore::tick()");
-  };
+  }
 
   void initialize()
   {

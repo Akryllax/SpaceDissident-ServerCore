@@ -1,5 +1,4 @@
-#ifndef SERVER_CORE_MODULE_H_
-#define SERVER_CORE_MODULE_H_
+#pragma once
 
 #include "modules/core_mod_id.h"
 #include "server_core_ctx.h"
@@ -35,5 +34,3 @@ public:
   virtual void onConfig(const ServerContext& coreCtx){};
   virtual void onTick(const ServerContext& coreCtx){};
 };
-
-#endif /* SERVER_CORE_MODULE_H_ */

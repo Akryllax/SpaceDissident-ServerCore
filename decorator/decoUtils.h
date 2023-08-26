@@ -1,10 +1,8 @@
-#ifndef DECO_H_
-#define DECO_H_
+#pragma once
 
+#include <algorithm>
 #include <type_traits>
 #include <vector>
-// #include "base_decorator.h"
-// #include "base_message.h"
 
 class BaseMessage;
 class BaseDecorator;
@@ -23,17 +21,16 @@ static void removeDecorator(const BaseMessage& msg)
   static_assert(std::is_base_of<BaseDecorator, T>::value, "T must inherit from BaseDecorator");
 };
 
-template <class T> //TODO This is aweful, please refactor
-static T* search_deco(std::vector<BaseDecorator*>& decoList)
-{
-  auto item = decoList.begin();
-  for(; item != decoList.end(); item++)
+template <class T>
+  static T* searchDecorator(std::vector<BaseDecorator*>& decoList)
   {
-    if(dynamic_cast<T*>(*item) != nullptr)
-      break;
+    static_assert(std::is_base_of<BaseDecorator, T>::value, "T must inherit from BaseDecorator");
+
+    auto it = std::find_if(decoList.begin(), decoList.end(), [](BaseDecorator* deco) {
+      return dynamic_cast<T*>(deco) != nullptr;
+    });
+
+    return (it != decoList.end()) ? dynamic_cast<T*>(*it) : nullptr;
   }
 
-  return (item != decoList.end()) ? (T*)(*item) : nullptr;
-};
 }; // namespace DecoratorUtils
-#endif
