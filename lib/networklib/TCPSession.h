@@ -1,3 +1,5 @@
+#pragma once
+
 #include <boost/asio.hpp>
 #include <cstdint>
 #include <memory>
@@ -7,9 +9,11 @@
 #include <vector>
 
 using boost::asio::ip::tcp;
+class TCPSessionTest;
 
 class TcpSession : public std::enable_shared_from_this<TcpSession>
 {
+  friend class TCPSessionTest;
 public:
   uint16_t SESSION_ID;
 
