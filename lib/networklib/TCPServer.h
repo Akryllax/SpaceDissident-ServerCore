@@ -1,4 +1,5 @@
 #include "TCPSession.h"
+#include "INetworkChannel.h"
 #include <boost/asio.hpp>
 #include <iostream>
 #include <string>
@@ -7,7 +8,7 @@
 
 using boost::asio::ip::tcp;
 
-class TCPServer
+class TCPServer : public INetworkChannel
 {
 
   friend class asio_udp_test;

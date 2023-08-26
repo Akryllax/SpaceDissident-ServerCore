@@ -9,9 +9,12 @@ class ServerCore;
 
 class ServerCoreModule
 {
-  static const uint16_t CORE_MOD_ID;
+public:
+  virtual ~ServerCoreModule() = default;
 
 public:
+  static const uint16_t CORE_MOD_ID;
+
   void initialize(const ServerContext& coreCtx)
   {
     spdlog::trace("ServerCoreModule::initialize()");

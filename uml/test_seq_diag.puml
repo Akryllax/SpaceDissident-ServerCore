@@ -1,0 +1,26 @@
+@startuml
+actor User
+
+participant "Controller" as Controller
+participant "Service" as Service
+participant "Repository" as Repository
+
+User -> Controller: Request Data
+activate Controller
+
+Controller -> Service: Process Data
+activate Service
+
+Service -> Repository: Retrieve Data
+activate Repository
+Repository --> Service: Data
+deactivate Repository
+
+Service -> Service: Manipulate Data
+Service --> Controller: Processed Data
+deactivate Service
+
+Controller -> User: Response Data
+deactivate Controller
+
+@enduml

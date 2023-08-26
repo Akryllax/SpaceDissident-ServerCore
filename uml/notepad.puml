@@ -1,0 +1,17 @@
+@startuml
+
+object parent
+object child1
+object child2
+object grandChild1
+object grandChild2
+object grandChild3
+
+parent --> child1
+parent --> child2
+
+child1 --> grandChild1
+child1 --> grandChild2
+child2 --> grandChild3
+
+@enduml

@@ -1,12 +1,13 @@
 #include "basic_setup.h"
 #include "modules/test_core_module.h"
 #include "server_core.h"
+#include "modules/test_core_module.h"
 #include "gtest/gtest.h"
 #include <memory>
 
 TEST(NetworkLibTest, FakeTest)
 {
-  auto serverCoreInstance = std::unique_ptr<ServerCore>{new ServerCore()};
+  auto serverCoreInstance = std::make_unique<ServerCore>();
 
   serverCoreInstance->initialize();
   serverCoreInstance->tick();
@@ -14,13 +15,24 @@ TEST(NetworkLibTest, FakeTest)
 
 TEST(BasicMessageTest, addDecoratorBasic)
 {
-  auto serverCoreInstance = std::unique_ptr<ServerCore>{new ServerCore()};
+  auto serverCoreInstance = std::make_unique<ServerCore>();
+
+  serverCoreInstance->initialize();
+  serverCoreInstance->tick();
+};
+
+TEST(BasicMessageTest, addCoreModule)
+{
+  auto serverCoreInstance = std::make_unique<ServerCore>();
 
   serverCoreInstance->initialize();
   serverCoreInstance->tick();
 
-  TestCoreModule testCoreModule;
-};
+  auto testCoreModule = std::make_unique<TestCoreModule>();
+  serverCoreInstance->addCoreModule(std::move(testCoreModule));  // Use std::move
+
+  serverCoreInstance->tick();
+}
 
 int main(int argc, char** argv)
 {

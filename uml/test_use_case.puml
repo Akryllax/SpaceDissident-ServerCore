@@ -1,0 +1,36 @@
+@startuml
+left to right direction
+
+actor User
+
+rectangle "System" {
+  usecase "Login"
+  usecase "Logout"
+  usecase "View_Profile"
+  usecase "Edit_Profile"
+  usecase "View_Dashboard"
+  usecase "Search_Product"
+  usecase "Add_To_Cart"
+  usecase "Remove_From_Cart"
+  usecase "Place_Order"
+  usecase "View_Order_History"
+  usecase "Cancel_Order"
+  usecase "Contact_Customer_Service"
+  usecase "View_Notifications"
+}
+
+User --> Login
+User --> Logout
+User --> View_Profile
+User --> Edit_Profile
+User --> View_Dashboard
+User --> Search_Product
+User --> Add_To_Cart
+User --> Remove_From_Cart
+User --> Place_Order
+User --> View_Order_History
+User --> Cancel_Order
+User --> Contact_Customer_Service
+User --> View_Notifications
+
+@enduml

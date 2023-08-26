@@ -2,16 +2,6 @@
 
 const uint16_t TestCoreModule::CORE_MOD_ID = CORE_MOD_TEST;
 
-TestCoreModule::TestCoreModule()
-{
-  spdlog::trace("TestCoreModule::TestCoreModule()");
-}
-
-TestCoreModule::~TestCoreModule()
-{
-  spdlog::trace("TestCoreModule::~TestCoreModule()");
-}
-
 void onInitialize(const ServerContext& coreCtx)
 {
   spdlog::trace("TestCoreModule::onInitialize()");

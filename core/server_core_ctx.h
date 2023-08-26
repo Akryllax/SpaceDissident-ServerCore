@@ -3,4 +3,7 @@
 #include <map>
 #include <string>
 
-using ServerContext = std::map<std::string, std::any>;
+class ServerContext : public std::map<std::string, std::any>
+{
+
+};

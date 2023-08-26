@@ -6,6 +6,5 @@ class TestCoreModule : public ServerCoreModule
 {
 public:
   static const uint16_t CORE_MOD_ID;
-  TestCoreModule();
-  ~TestCoreModule();
+  TestCoreModule() = default;
 };

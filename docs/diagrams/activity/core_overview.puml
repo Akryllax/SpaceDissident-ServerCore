@@ -1,0 +1,21 @@
+@startuml
+
+partition "ServerCore" {
+    (*) --> "Start application"
+    "Start application" --> "Initialzie logging"
+    partition "ServerCoreCtx" {
+        "Initialzie logging" --> "Load configuration"
+    }
+    if "Main loop" then
+    -->[true] "Hello"
+    endif
+
+    "Load configuration" --> if "Configuration is valid" then
+    -->[true] if "Open socket" then
+        --> "Start listening"
+    endif
+    -->[false, critical error] (*)
+    endif
+}
+
+@enduml

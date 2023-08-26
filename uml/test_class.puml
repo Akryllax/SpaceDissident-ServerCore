@@ -1,0 +1,34 @@
+@startuml
+class 5GNode {
+  ' - id: int
+  ' - name: string
+  ' + getName(): string
+  ' + setName(name: string): void
+  + sessionMap : map
+}
+
+class TrafficForwarder {
+
+}
+
+class DNSCache {
+
+}
+
+class Order {
+  - id: int
+  - total: decimal
+  + calculateTotal(): decimal
+  + addItem(item: Item): void
+}
+
+class Item {
+  - id: int
+  - name: string
+  - price: decimal
+}
+
+Customer "1" --> "0..*" Order
+Order "1" --> "*" Item
+
+@enduml

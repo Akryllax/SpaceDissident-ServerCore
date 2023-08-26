@@ -23,32 +23,32 @@ diagrams:
     #     - myproject
     exclude:
       namespaces:
-        # - std
+        - std
         - fmt
         - spdlog
-  core-seq-diagram:
-    type: sequence
-    glob:
-      - core/**/*.h
-      - core/**/*.cpp
-      - decorator/**/*.h
-      - decorator/**/*.cpp
-      - util/**/*.h
-      - util/**/*.cpp
-      - lib/**/*.h
-      - lib/**/*.cpp
-      - test/**/*.h
-      - test/**/*.cpp
-    # using_namespace:
-    #   - myproject
-    # include:
-    #   namespaces:
-    #     - myproject
-    exclude:
-      namespaces:
-        # - std
-        - fmt
-        - spdlog
+  # core-seq-diagram:
+  #   type: sequence
+  #   glob:
+  #     - core/**/*.h
+  #     - core/**/*.cpp
+  #     - decorator/**/*.h
+  #     - decorator/**/*.cpp
+  #     - util/**/*.h
+  #     - util/**/*.cpp
+  #     - lib/**/*.h
+  #     - lib/**/*.cpp
+  #     - test/**/*.h
+  #     - test/**/*.cpp
+  #   # using_namespace:
+  #   #   - myproject
+  #   # include:
+  #   #   namespaces:
+  #   #     - myproject
+  #   exclude:
+  #     namespaces:
+  #       - std
+  #       - fmt
+  #       - spdlog
   core-include-diagram:
     type: include
     glob:
@@ -67,8 +67,8 @@ diagrams:
     # include:
     #   namespaces:
     #     - myproject
-    exclude:
-      namespaces:
+    # exclude:
+    #   namespaces:
         # - std
-        - fmt
-        - spdlog
+        # - fmt
+        # - spdlog

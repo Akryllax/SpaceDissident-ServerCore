@@ -4,38 +4,76 @@
 #include "config_reader.h"
 #include "server_core_ctx.h"
 #include "server_core_module.h"
+#include <memory>
 #include <vector>
+
+using CoreModulesPtrVector = std::vector<std::unique_ptr<ServerCoreModule>>;
 
 class ServerCore
 {
-private:
-  ServerContext _ctx;
-  std::vector<ServerCoreModule*> coreModules;
+public:
+  enum class MODULE_STATUS
+  {
+    NONE = 0,
+    SUCCESS = 1,
+    ERROR = 2
+  };
 
 public:
-  ServerCore();
-  ~ServerCore();
-
-  void tick();
-  void initialize();
-
-  //!TODO rework this, better initalization in the future
-  template <typename tCoreModule>
-  int addCoreModule(const tCoreModule& coreModule)
+  ServerCore()
+      : _ctx(/* initialize context */)
+      , _config(std::make_unique<ConfigHolder>())
   {
-    this->coreModules.push_back(coreModule);
-    coreModule.initialize(this->_ctx);
-    coreModule.config(this->_ctx);
-    return true;
+    spdlog::trace("ServerCore constructor");
+    initialize();
   }
 
-  const std::vector<ServerCoreModule*>& getCoreModules()
+  // ~ServerCore()
+  // {
+  //   spdlog::trace("ServerCore deconstructor");
+  // };
+
+  template <typename T>
+  MODULE_STATUS addCoreModule(std::unique_ptr<T> coreModule)
   {
-    return this->coreModules;
+    if(!coreModule)
+    {
+      return MODULE_STATUS::ERROR;
+    }
+
+    coreModule->initialize(_ctx);
+    coreModule->config(_ctx);
+    _coreModules.push_back(std::move(coreModule));
+    return MODULE_STATUS::SUCCESS;
   }
 
-protected:
-  ConfigHolder* config;
+  void tick()
+  {
+    spdlog::trace("ServerCore::tick()");
+  };
 
-  void tickCoreModules();
+  void initialize()
+  {
+    spdlog::trace("ServerCore initialize");
+  }
+
+  const CoreModulesPtrVector& getCoreModules() const
+  {
+    return _coreModules;
+  }
+
+  void tickCoreModules()
+  {
+    spdlog::trace("ServerCore tickCoreModules");
+    const auto& coreModules = this->getCoreModules();
+    for(const auto& module : coreModules)
+    {
+      module->tick(_ctx);
+    }
+  }
+
+private:
+  ServerContext _ctx;
+  CoreModulesPtrVector _coreModules;
+  std::unique_ptr<ConfigHolder> _config;
 };
